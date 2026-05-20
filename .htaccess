@@ -1,0 +1,48 @@
+#RewriteEngine on
+
+# Force HTTPS (Exempt localhost)
+#RewriteCond %{HTTPS} off
+#RewriteCond %{HTTP_HOST} !^localhost [NC]
+#RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#RewriteCond $1 !^(index\.php|public|\.txt)
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php?$1
+
+RewriteEngine On
+
+# Disable insecure HTTP methods
+RewriteCond %{REQUEST_METHOD} ^(OPTIONS|HEAD|DELETE|DEBUG|TRACK|TRACE) [NC]
+RewriteRule ^ - [F]
+
+# Block access to .git directory and other sensitive files
+RewriteRule ^\.git - [F,L]
+RewriteRule ^\.(gitignore|gitattributes|editorconfig|buildpath|project|idea) - [F,L,NC]
+RewriteRule ^(composer\.(json|lock)|php\.ini|error_log|php_conn\.php|test_mysqli\.php)$ - [F,L,NC]
+RewriteRule ^(README\.md|readme\.rst|contributing\.md|url_list\.md|license\.txt)$ - [F,L,NC]
+
+# Force HTTPS, but do not loop on localhost tests
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Front controller
+RewriteCond %{REQUEST_URI} !^/public/ [NC]
+RewriteCond %{REQUEST_URI} !\.txt$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; frame-ancestors 'self';"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+

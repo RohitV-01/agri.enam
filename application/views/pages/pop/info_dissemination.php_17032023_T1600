@@ -1,0 +1,154 @@
+<style type="text/css">
+	#myModalbankdetail a.close{color:#f00;opacity:1;}
+	#myModalbankdetail h3{color:#27AE60;}
+	@media (max-width:1600px){
+	#myModalbankdetail{width: 555px; height: 480px;}
+	}
+	@media (max-width:1400px){
+	#myModalbankdetail{width: 555px; height: 480px;}
+	}
+
+	@media (max-width:1200px){
+	#myModalbankdetail{width: 555px; height: 480px;}
+	}
+	@media (max-width:960px){
+	#myModalbankdetail{width: 555px; height: 480px;}
+	}
+
+	@media (max-width:480px){
+	#myModalbankdetail{width: 300px; height: 310px;}
+}
+</style>
+
+<div class="container-fuild" style="float:left;width:100%;background-color:#eee;padding:10px 0% 12px 0%;">
+	<div class="container"><?php print_r($slider); ?></div>
+</div>
+ 
+<div class="container-fuild content-section" style="padding-top:15px;float:left;width:100%;padding-bottom:15px;">
+	<div class="container">
+		<div class="col-md-12 bc-nav" >
+			<a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+			<a href="<?php echo base_url(); ?>pop-dashboard"><?php echo $this->lang_file->heading_fetch('pop_dashboard');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+			<?php echo $this->lang_file->heading_fetch('information_dissemination');?></a>
+
+		</div>
+		<div class="col-sm-9 content-9 h-space-padd-r">
+
+			<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('pop_service');?><p class="t-stake-data"><a id="backBtn"><b><?php echo $this->lang_file->heading_fetch('back');?></b>  <img src="<?php echo base_url(); ?>assest/images/pop/back-arrow.png" style="width: 20px;"></a></p></span></h3>
+			<div align="center" class="row">
+				<p>&nbsp;</p>
+
+				<div class="col-md-2" style="padding-top: 0px;"><a href="https://www.agribazaar.com" target="_blank"><img src="<?php echo base_url();?>/assest/images/pop/Star Agribazaar.jpg" style="width:108px; height: 91px;" />
+				<b id="star_agri"><?php echo $this->lang_file->heading_fetch('star_agri');?></b></a><img src="<?php echo base_url();?>assest/images/pop/i_tag.png" class="imgpop" data-id="star_agri"/>
+				</div>
+				
+				<div class="col-md-2" style="padding-top: 36px"><a href="https://kisannetwork.com" target="_blank"><img src="<?php echo base_url(); ?>/assest/images/pop/IDS Kisan Network.png" style="width:135px; height: 53px;" /><br/><br>
+				<b id="ids"><?php echo $this->lang_file->heading_fetch('ids');?></b></a><img src="<?php echo base_url();?>assest/images/pop/i_tag.png" class="imgpop" data-id="ids"/>
+				</div>
+
+				<div class="col-md-2" style="padding-top: 20px;"><a href="https://www.fpobazar.com" target="_blank"><img src="<?php echo base_url(); ?>assest/images/pop/FPO Bazaar.png" style="width:100px; height: 70px;" /><br/><br>
+				<p id="fpo_p" style="text-align: center;"><b id="fpo"><?php echo $this->lang_file->heading_fetch('fpo');?></b></a><img class="imgpop" data-id="fpo" src="<?php echo base_url();?>assest/images/pop/i_tag.png"/></p>
+				</div>
+
+				<div class="col-md-2"><a href="<?php echo base_url(); ?>pop-dashboard/wdra"><img src="<?php echo base_url(); ?>assest/images/pop/wdra-logo.png" style="width:90px; height: 90px;" /><br/><br>
+				<p id="wdra_p" style="text-align: center;"><b id="fpo"><?php echo $this->lang_file->heading_fetch('pop_wdra');?></b></p></a>
+				</div>
+
+				<div class="col-md-2">
+					<a href="https://kvssmscs.com/" target="_blank"><img src="<?php echo base_url(); ?>assest/images/pop/kvss_logo.png" style="width:82px; height: 92px;"/><br/><br>
+				<p id="pop_kvss"><b style="white-space: nowrap;padding-left: 38px;"><?php echo $this->lang_file->heading_fetch('pop_kvss'); ?></b></a><img class="imgpop" data-id="pop_kvss" src="<?php echo base_url();?>assest/images/pop/i_tag.png"/></p>
+				</div>
+
+				<div class="col-md-2" style="padding-top: 21px;"><a href="https://agrotechindia.co.in/" target="_blank"><img src="<?php echo base_url(); ?>assest/images/pop/agro.png" style="width:100px; height: 70px;" /><br/><br>
+				<p id="pop_agrotech"><b style="white-space: nowrap;padding-left: 29px"><?php echo $this->lang_file->heading_fetch('pop_agrotech'); ?></b></a><img class="imgpop" data-id="pop_agrotech" src="<?php echo base_url();?>assest/images/pop/i_tag.png"/></p>
+				</div>
+				<p>&nbsp;</p>
+			</div>
+
+
+			<div align="center" class="row">
+				<p>&nbsp;</p>
+
+				<div class="col-md-2" style="padding-top: 41px;"><a href="https://www.absolute.ag/" target="_blank"><img src="<?php echo base_url(); ?>assest/images/pop/absolute.png" style="width:94px; height: 49px;" /><br/><br>
+				<p id="pop_absolute"><b style="white-space: nowrap;padding-left: 27px"><?php echo $this->lang_file->heading_fetch('pop_absolute'); ?></b></a><img class="imgpop" data-id="pop_absolute" src="<?php echo base_url();?>assest/images/pop/i_tag.png"/></p>
+				</div>
+
+				<div class="col-md-2" style="padding-top: 0px;"><a href="https://tracextech.com/" target="_blank"><img src="<?php echo base_url();?>/assest/images/pop/tracex_logo.png" style="width:108px; height: 91px;"/><br><br>
+				<b id="pop_tracex"><?php echo $this->lang_file->heading_fetch('pop_tracex');?></b></a><img src="<?php echo base_url();?>assest/images/pop/i_tag.png" class="imgpop" data-id="pop_tracex"/>
+				</div>
+				
+				<div class="col-md-2" style="padding-top: 36px"><a href="javascript:void(0)"><img src="<?php echo base_url(); ?>/assest/images/pop/ninja_logo.png" style="width:71px; height: 55px;" /><br/><br>
+				<b id="pop_ninja"><?php echo $this->lang_file->heading_fetch('pop_ninja');?></b></a><img src="<?php echo base_url();?>assest/images/pop/i_tag.png" class="imgpop" data-id="pop_ninja"/>
+				</div>
+
+				<p>&nbsp;</p>
+			</div>
+
+
+
+
+		</div>			
+
+		<div class="col-sm-3 content-3 h-space-padd-r-l">
+			<div class="focus-section">
+				<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+				<div class="home-ind-map">
+					<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="myModalbankdetail" style="
+		    background-color: #fff;
+		    margin:auto;
+		    left: 0;
+		    right: 0;
+		    border-radius: 23px;border:2px solid #7b7a7a;">
+		  	<div class="modal-header text-center">
+		    	<a class="close" data-dismiss="modal">x</a>
+		     	<h3><b id="modal_title"></b></h3>
+		  	</div>
+			<div class="modal-body">
+
+				<p id="modal_details" style="font-size: 16px;"></p>
+				
+		  	</div>
+		
+		</div>
+
+
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+	$('#backBtn').click(function(){
+		parent.history.back();
+	});
+
+	
+	$('.imgpop').click(function(){
+		$("#modal_details").html("");
+		let id = "desc_" + $(this).data("id");
+		let platId = $(this).data("id");
+		$('#modal_title').html($('#'+platId).text());
+		$.ajax({
+			url:"<?php echo base_url();?>/Enam_ctrl/getHeadingData",
+			method:"POST",
+			dataType: 'json',
+			data:{id:id},
+			success:function(response){
+				let bodyData='';
+				for(let data of response){
+					console.log(response);
+					bodyData += `${data.heading_item}`;
+				}
+				$('#modal_details').html(bodyData);
+				$('#myModalbankdetail').modal('show');
+			}
+		})
+	});
+</script>
+
+

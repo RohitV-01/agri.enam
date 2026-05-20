@@ -1,0 +1,45 @@
+--------------------------------------------------
+Activity Started at : 2025-03-09 06:00:01
+--------------------------------------------------
+2025-03-09 06:21:35 : DPR Report(CSV format) Generated Successfully for the date: 2025-03-08, Report : /mnt/reports/dpr_2025-03-08.csv
+2025-03-09 06:21:44 : DPR Report(PDF format) Generated Successfully for the date: 2025-03-08, Report : /mnt/reports/dpr_2025-03-08.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 esadelnkn03.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 esadelnkn03.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adil@farmgate.com>
+250 recipient <adil@farmgate.com> ok
+>>> RCPT TO:<chiranjiv.s@farmgate.com>
+250 recipient <chiranjiv.s@farmgate.com> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<enam_delhi@farmgate.com>
+250 recipient <enam_delhi@farmgate.com> ok
+>>> RCPT TO:<kSpandana@fertis.in>
+250 recipient <kSpandana@fertis.in> ok
+>>> RCPT TO:<madhavi@fertis.in>
+250 recipient <madhavi@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<rakesh@farmgate.com>
+250 recipient <rakesh@farmgate.com> ok
+>>> RCPT TO:<sarun@fertis.in>
+250 recipient <sarun@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@farmgate.com>
+250 recipient <suman.s@farmgate.com> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 502783366 accepted
+>>> QUIT
+221 esadelnkn03.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-03-09 06:21:44
+--------------------------------------------------

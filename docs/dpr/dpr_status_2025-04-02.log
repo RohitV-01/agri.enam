@@ -1,0 +1,5 @@
+--------------------------------------------------
+Activity Started at : 2025-04-03 06:00:02
+--------------------------------------------------
+ERROR 1317 (70100) at line 1: Query execution was interrupted
+2025-04-03 12:33:52 : DPR Report(CSV format) Generation Failed for the date: 2025-04-02, Please Check the log -> /mnt/reports/dpr_status_2025-04-02.log

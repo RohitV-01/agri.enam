@@ -1,0 +1,218 @@
+<div class="container-fuild" style="float:left;width:100%;background-color:#eee;padding:10px 0% 12px 0%;">
+<div class="container"><?php print_r($slider); ?></div>
+</div>
+ 
+
+<div class="container-fuild content-section" style="padding-top:15px;float:left;width:100%;padding-bottom:15px;">
+<div class="container">
+<div class="col-md-12 bc-nav" ><a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+<a href="<?php echo base_url(); ?>dashboard"><?php echo $this->lang_file->heading_fetch('dashboard');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;<?php echo $this->lang_file->heading_fetch('heading_stackholder');?> </div>
+	<div class="col-sm-9 content-9 h-space-padd-r">
+
+<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('stackholder_breakup');?><p class="t-stake-data"><?php echo $this->lang_file->heading_fetch('stackholder_totalno');?><a style="color: black" id="table_mandi_date"></a>: <b id="total_stakeholders">0</b></p></span></h3>
+<div class="row">
+				<div class="col-md-3 select-y-state">
+<div class="state-box"><label><?php echo $this->lang_file->heading_fetch('stackholder_select_state');?></label>					
+<select class="form-control" id="today_states">
+						<option value="0">---Select State---</option>
+					</select></div>
+				</div>
+				<div class="col-sm-9">
+					<div id="table_mandi" style="display:block;">
+						<table class="table table-striped table-bordered">
+						<thead></thead>
+						<tbody class="tbodya" id="mandi_table">
+                                                       <tr>
+                                                                <td style="width:75%;"><b><?php echo $this->lang_file->heading_fetch('stackholder_state');?></b></td>
+                                                                <td style="width:25%;" id="table_mandi_state"></td>
+                                                        </tr>
+							<tr>
+                                                                <td><b><?php echo $this->lang_file->heading_fetch('stackholder_traders');?></b></td>
+                                                                <td id="table_mandi_trade"></td>
+                                                        </tr>
+							<tr>
+								<td><b><?php echo $this->lang_file->heading_fetch('stackholder_commission');?></b></td>
+								<td id="table_mandi_cas"></td>
+							</tr>
+							<tr>
+								<td><b><?php echo $this->lang_file->heading_fetch('stackholder_service_provider');?></b></td>
+								<td id="table_mandi_sp"></td>
+							</tr>
+							<tr>
+								<td><b><?php echo $this->lang_file->heading_fetch('stackholder_fpos');?></b></td>
+								<td id="table_mandi_fpo"></td>
+							</tr>
+							<tr>
+								<td><b><?php echo $this->lang_file->heading_fetch('stackholder_farmer');?></b></td>
+								<td id="table_mandi_far"></td>
+							</tr>
+							<tr>
+								<td><b><?php echo $this->lang_file->heading_fetch('stackholder_total');?></b></td>
+								<td id="table_mandi_tot"></td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+</div>			
+
+
+	<div class="col-sm-3 content-3 h-space-padd-r-l">
+		<div class="focus-section">
+			<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+				<div class="home-ind-map">
+					<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script>
+var baseUrl = $('#base_url').val();
+
+function number_formate(num){
+	var a = num;
+	 var b = ",";
+	 if(a.length == 4){
+		 var position = 1;
+		 var output = [a.slice(0, position), b, a.slice(position)].join('');
+	 }
+	 else if(a.length == 5){
+		 var position = 2;
+		 var output = [a.slice(0, position), b, a.slice(position)].join('');
+	 }
+	 else if(a.length == 6){
+		 var position = 1;
+		 var output = [a.slice(0, position), b, a.slice(position)].join('');
+		 var position = 4;
+		 var output = [output.slice(0, position), b, output.slice(position)].join('');
+	 }
+	 else if(a.length == 7){
+		 var position = 2;
+		 var output = [a.slice(0, position), b, a.slice(position)].join('');
+		 var position = 5;
+		 var output = [output.slice(0, position), b, output.slice(position)].join('');
+	 }
+	 else if(a.length == 8){
+		 console.log('8');
+		 var position = 1;
+		 var output = [a.slice(0, position), b, a.slice(position)].join('');
+		 var position = 4;
+		 var output = [output.slice(0, position), b, output.slice(position)].join('');
+		 var position = 7;
+		 var output = [output.slice(0, position), b, output.slice(position)].join('');
+	 }
+	 else{
+		 var output = num;
+	 }
+	return output;
+}
+
+
+	default_data();
+	function default_data(){
+		$.ajax({	
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/stakeholder_default_data',
+	        dataType: "json",
+	        data: {},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+console.log(response);
+
+
+					$('#table_mandi_state').html('21');
+
+					//new added
+					$('#table_mandi_date').html(response.data[0].created_at);
+
+					$('#table_mandi_trade').html(number_formate(response.data[0].trader));
+					$('#table_mandi_cas').html(number_formate(response.data[0].commsionAgent));
+					$('#table_mandi_sp').html(number_formate(response.data[0].serviceProvider));
+					$('#table_mandi_fpo').html(number_formate(response.data[0].fpo));
+					$('#table_mandi_far').html(number_formate(response.data[0].farmer));
+					var x = number_formate(parseInt(parseInt(response.data[0].trader) +
+						parseInt(response.data[0].commsionAgent) +
+						parseInt(response.data[0].serviceProvider) +
+						parseInt(response.data[0].fpo) +
+						parseInt(response.data[0].farmer)).toString()
+					);
+					$('#table_mandi_tot').html('<b>'+ x +  '</b>');
+				}
+	        }
+		});
+	}
+
+	$.ajax({	
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/states_name',
+	        dataType: "json",
+	        data: {},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+					var x = '<option value="0">-- Select State --</option>';
+					$.each(response.data,function(key,value){
+						x = x + '<option value="'+ value.state_id +'">'+ value.state_name +'</option>';
+					});
+					$('#today_states').html(x);
+				}
+	        }
+		});
+		
+	$(document).on('change','#today_states',function(){
+		var state_id = $('#today_states').val();
+		if(state_id == 0){
+			default_data();
+		}
+		else{ 
+			$.ajax({
+				type: 'POST',
+				url: baseUrl+'Ajax_ctrl/mandidetail_enam',
+				dataType: "json",
+				async: false,
+				data: {
+					'state_id' : state_id
+				},
+				beforeSend: function(){},
+				complete: function(){},
+				success:function (response) {
+					console.log(response);
+						$('#table_mandi_state').html($('#today_states option:selected').text());
+						$('#table_mandi_trade').html(number_formate(response.data[0].trader));
+						$('#table_mandi_cas').html(number_formate(response.data[0].commsionAgent));
+						$('#table_mandi_sp').html(number_formate(response.data[0].serviceProvider));
+						$('#table_mandi_fpo').html(number_formate(response.data[0].fpo));
+						$('#table_mandi_far').html(number_formate(response.data[0].farmer));
+						$('#table_mandi_tot').html('<b>' + number_formate(response.data[0].total) + '</b>');
+				}
+			});
+		}
+	});
+
+
+$.ajax({	
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/mandicount',
+	        dataType: "json",
+	        data: {},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+                                $('#total_stakeholders').html(number_formate(response.count[0].total));
+                        }
+                        else{
+                                $('#total_stakeholders').html(total);
+                        }
+                }
+       });
+
+
+</script>

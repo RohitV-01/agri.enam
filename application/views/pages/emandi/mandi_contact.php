@@ -1,0 +1,188 @@
+<div class="container-fuild" style="float:left;width:100%;background-color:#eee;padding:10px 0% 12px 0%;">
+<div class="container"><?php print_r($slider); ?></div>
+</div>
+
+<div class="container-fuild content-section" style="padding-top:10px;float:left;width:100%;padding-bottom:15px;">
+<div class="container">
+<div class="col-md-12 bc-nav"><a href="<?php echo base_url(); ?>" title="">Home</a>&nbsp; <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;  <a href="<?php echo base_url(); ?>eNam-mandi-status">eNam Mandis</a>&nbsp; <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;  eNam Mandis 
+</div>
+	<div class="col-sm-9 content-9 h-space-padd-r">
+<h3 class="p-title"><span>eNam Mandis Contact Details</span></h3>
+			<div class="col-md-10 well e-contact-detail-box">
+				<div class="col-md-3 select-state-img">
+				<img alt="" style="margin-top:-5px;" src="<?php echo base_url(); ?>/assest/images/select-state.gif" />
+				</div>
+				<div class="col-md-3 contact-select-state"><select class="form-control" id="today_states">
+					<option value="0">All State</option>
+				</select></div>
+				<div class="col-md-3 contact-select-dist"><select class="form-control col-md-4" id="today_district">
+					<option value="0">Select District</option>
+				</select></div>
+				<div class="col-md-3 contact-select-apmc" style="padding:0px"><select class="form-control col-md-4" id="today_mandi">
+					<option value="0">Select APMC's</option>
+				</select></div>	
+</div>
+				<div class="col-md-2 well text-center no-of-mandis-box" id="contact_page_mandi_count">No. of eNam Mandis<br />
+					<b><span id="contact_page_mandi_count_span" style="color:#000;font-size:18px;">1000</span></b></div>
+				<table class="table table-bordered table-striped" id="mandi_table">
+                          <div id="table_top_statename" style="display:none;">Your search result for <b id="table_top_statename_text"></b></div>
+                </table>
+	</div>
+	<div class="col-sm-3 content-3 h-space-padd-r-l">
+		<div class="focus-section">
+			<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+				<div class="home-ind-map">
+					<a href="javascript:void(0);"><img alt="" src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+var baseUrl = $('#base_url').val();
+mandi_count();
+	$.ajax({
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/state_namedetail',
+	        dataType: "json",
+	        data: {},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+					var x = '<option>All State</option>';
+					$.each(response.data,function(key,value){
+						x = x + '<option value="'+ value.state+'">'+ value.state+'</option>';
+					});
+					$('#today_states').html(x);
+				}
+				else{
+				}
+	        }
+		});
+		
+	$(document).on('change','#today_states',function(){
+		var state_id = $('#today_states').val();
+		$.ajax({
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/district_name_detail',
+	        dataType: "json",
+	        data: {
+				'state_id' : state_id
+			},
+	        beforeSend: function(){
+				$('#today_district').html('<option value="0">Select District</option>');
+				$('#today_mandi').html('<option value="0">Select APMC\'s</option>');
+			},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+					var x = '<option>Select District</option>';
+					$.each(response.data,function(key,value){
+						x = x + '<option value="'+ value.district+'">'+ value.district+'</option>';
+					});
+					$('#today_district').html(x);
+				}
+				else{
+				}
+	        }
+		});
+		mandi_count();
+	});
+	
+	$(document).on('change','#today_district',function(){
+		var state_id = $('#today_states').val();
+		var district_name = $('#today_district').val();
+		$.ajax({
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/mandi_namedetail',
+	        dataType: "json",
+	        data: {
+				'state_code' : state_id,
+				'district' : district_name
+			},
+	        beforeSend: function(){
+				$('#today_mandi').html('<option value="0">Select APMC\'s</option>');
+			},
+	        complete: function(){},
+	        success:function (response) {
+			console.log(response);
+	        	if(response.status == 200){
+					var x = '<option>Select APMC\'s</option>';
+					$.each(response.data,function(key,value){
+						x = x + '<option value="'+ value.mandi_name+'">'+ value.mandi_name+'</option>';
+					});
+					$('#today_mandi').html(x);
+				}
+				else{
+				}
+	        }
+		});
+		mandi_count();
+	});
+	
+	$(document).on('change','#today_mandi',function(){
+		var state_name = $('#today_states').val();
+		var district_name = $('#today_district').val();
+		var mandi_id = $('#today_mandi').val();
+		
+		$.ajax({
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/mandi_name',
+	        dataType: "json",
+	        data: {
+				'mandi_id' : mandi_id,
+                'state_name' : state_name,
+                'district_name' : district_name
+			},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+                    $('#table_top_statename_text').html(state_name);
+                    $('#table_top_statename').css('display','block');
+					var x = '<thead><tr><th colspan="2">Contact Details</th></tr></thead>'+
+							'<tbody><tr><td style="width:17%;"><b>Mandi Name</b></td><td>'+ response.data[0].mandi_name+'</td></tr>'+
+							'<tr><td><b>State</b></td><td>'+ response.data[0].state+'</td></tr>'+
+							'<tr><td><b>Address</b></td><td>'+ response.data[0].address+'</td></tr>'+
+							'<tr><td><b>Contact Details</b></td><td>'+ response.data[0].contact_details+'</td></tr>'+
+							//'<tr><td><b>Email Address</b></td><td>'+ response.data[0].contact_details+'</td></tr>'+
+							'<tr><td><b>Commodities Traded</b></td><td>'+ response.data[0].commodity_details +'</td></tr></tbody>';
+					console.log(x);
+				$('#mandi_table').html(x);	
+					
+				}
+				else{
+                $('#table_top_statename').css('display','none'); 
+				$('#mandi_table').html('No record.');
+				}
+	        }
+		});
+		mandi_count();
+	});	
+	
+	function mandi_count(){
+		$.ajax({
+	        type: 'POST',
+	        url: baseUrl+'Ajax_ctrl/mandi_count',
+	        dataType: "json",
+	        data: {
+				'state' : $('#today_states').val(),
+				'district' : $('#today_district').val(),
+				'mandi' : $('#today_mandi').val(),
+			},
+	        beforeSend: function(){},
+	        complete: function(){},
+	        success:function (response) {
+	        	if(response.status == 200){
+					$('#contact_page_mandi_count_span').html(response.count);
+				}
+				else{
+					$('#contact_page_mandi_count_span').html('1000');
+				}
+	        }
+		});
+	}
+</script>

@@ -1,0 +1,1339 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Enam_ctrl extends CI_Controller {
+
+	function __construct(){
+		parent :: __construct();
+		$this->load->helper(array('url','file'));
+		$this->load->database();
+		$this->load->model(array('admin/Language_model','admin/Video_model','admin/Slider_model','admin/Widget_model','admin/Menu_model','Enam_model','admin/Event_model', 'admin/Pop_up_model'));
+		$this->load->library(array('session','substring','lang_file'));
+		if(!$this->session->userdata('client_language')){
+		    $newdata = array(
+		        'client_language'  => '1'
+		    );
+		}
+		else{
+		    $newdata = array(
+		        'client_language'  => $this->session->userdata('client_language'),
+		    );
+		}	
+		$this->session->set_userdata($newdata);
+	}
+
+	public function index(){
+	    $data = array();
+        $data['page_id'] = 'page_0';
+		$data['title'] = 'eNam | Home';
+		$data['keywords'] = 'enam home';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['sliders'] = $this->Slider_model->slider_list_client();
+		//print_r($data['sliders']); die;
+		$data['videos'] = $this->Video_model->video_home_page_list();
+		$data['popup'] = $this->Pop_up_model->popup_notice_list();
+		
+		$v = array();
+		foreach($data['videos'] as $ve){
+			$temp = array();
+			$temp = $ve;
+			$temp['created_at'] = $this->time_elapsed_string(strtotime($ve['created_at']));
+			$v[] = $temp;
+		}
+		
+		$data['videos'] = $v;
+		$data['home_body'] = $this->Widget_model->home_content(); 	
+		$data['newses'] = $this->Enam_model->all_news();
+		$data['events'] = $this->Event_model->home_list_events();
+		$data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		
+        $data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		$data['links'] = $this->Enam_model->all_links();
+		$data['main_contant'] = $this->load->view('pages/dashboard',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+	
+	function time_elapsed_string($time) {
+		  $time_difference = time() - $time;
+		  if( $time_difference < 1 ) {
+		      return 'less than 1 second ago';
+		  }
+	      $condition = array( 12 * 30 * 24 * 60 * 60 =>  'year',
+    	  30 * 24 * 60 * 60       =>  'month',
+    	  24 * 60 * 60            =>  'day',
+    	  60 * 60                 =>  'hour',
+    	  60                      =>  'minute',
+    	  1                       =>  'second'
+		);
+		
+		foreach( $condition as $secs => $str )
+		{
+			$d = $time_difference / $secs;
+			if( $d >= 1 )
+			{
+				$t = round( $d );
+				return 'about ' . $t . ' ' . $str . ( $t > 1 ? 's' : '' ) . ' ago';
+			}
+		}
+	}
+
+    function ip(){  
+      if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+      } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+      }
+      $json = file_get_contents("http://ipinfo.io/".$ip."/geo");
+      $details = json_decode($json, true);
+      print_r($details);
+   }
+
+    function enam_registration(){   
+      $data = array();
+      $data['title'] = 'eNAM | Registration';
+      $data['page_id'] = '-91';
+	  $data['keywords'] = 'eNAM Registration';
+	  $data['head'] = $this->load->view('comman/head',$data,TRUE);
+	  $data['languages'] = $this->Language_model->get_all_language();
+	  $data['header'] = $this->load->view('comman/header',$data,TRUE);
+	  $data['menus'] = $this->Enam_model->all_menus();
+	  $data['head'] = $this->load->view('comman/head',$data,TRUE);
+	  $data['header'] = $this->load->view('comman/header',$data,TRUE);
+	  $data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+	  $data['footer'] = $this->load->view('comman/footer','',TRUE);
+	  $data['main_contant'] = $this->load->view('pages/enam_registration/registration',$data,TRUE);
+	  $this->load->view('comman/index',$data);
+    }
+
+function datapage(){   
+      $data = array();
+      $data['title'] = 'eNAM | Registration';
+      $data['page_id'] = '-91';
+	  $data['keywords'] = 'eNAM Registration';
+	  $data['head'] = $this->load->view('comman/head',$data,TRUE);
+	  $data['languages'] = $this->Language_model->get_all_language();
+	  $data['header'] = $this->load->view('comman/header',$data,TRUE);
+	  $data['menus'] = $this->Enam_model->all_menus();
+	  $data['head'] = $this->load->view('comman/head',$data,TRUE);
+	  $data['header'] = $this->load->view('comman/header',$data,TRUE);
+	  $data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+	  $data['footer'] = $this->load->view('comman/footer','',TRUE);
+	  $data['main_contant'] = $this->load->view('pages/DARPAN/kpi_dash_data_push/push_data_to_kpi',$data,TRUE);
+	  $this->load->view('comman/index',$data);
+    }
+
+
+	function all_news_desc(){  
+	    $data = array();
+		$data['page_id'] = 'page_11';
+		$data['title'] = 'eNAM | News Archive';
+		$data['keywords'] = 'eNAM All News Archive';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['news_lists'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+
+                $temp = array();
+		foreach($data['news_lists'] as $news) {
+			$a = $news;
+			$str = html_entity_decode($news['news_contect']);
+			
+			$regex = "/\[(.*?)\]/";
+			$data['output'] = $str;
+			preg_match_all($regex, $str, $matches);
+			for($i =0; $i < count($matches[1]); $i++){
+				$a['news_contect'] = str_replace($matches[0][$i],$this->substring->image_path(),$news['news_contect']);
+			}
+			$temp[] = $a;
+		}
+		$data['news_lists'] = $temp;
+
+		$data['newses'] = $this->Enam_model->all_news();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE); 
+		$data['sliders'] = $this->Slider_model->slider_list_client();
+		$data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		$data['main_contant'] = $this->load->view('pages/news/all_news',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+   	function registration_guideline(){ 
+   	    $data = array();
+        $data['page_id'] = 'page_-58';
+		$data['title'] = 'eNAM | Registration Guidelines';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		$data['main_contant'] = $this->load->view('pages/today/registration_guideline_toggle',$data,TRUE);
+		$this->load->view('comman/index',$data);
+    }
+
+    function training_manuals(){ 
+        $data = array();
+        $data['page_id'] = 'page_-59';
+		$data['title'] = 'eNAM | Manuals';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);	
+		$data['languages'] = $this->Language_model->get_all_language();
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		$data['main_contant'] = $this->load->view('pages/today/training_manuals_toggle',$data,TRUE);
+		$this->load->view('comman/index',$data);
+    }
+ 
+
+	function stake_holder_module(){
+	    $data = array();
+        $data['page_id'] = 'page_-63';
+		$data['title'] = 'eNAM | Stake Holder Module';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();	
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);       
+		$data['sliders'] = $this->Slider_model->slider_list_client();
+		$data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		$data['main_contant'] = $this->load->view('pages/today/stake_holder_module',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+	
+//working
+function mandi_contact(){
+        $data = array();
+        $data['page_id'] = 'page_-46';
+		$data['title'] = 'eNAM | eNam Mandis';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+		
+		$data['sliders'] = $this->Slider_model->slider_list_client();
+		$data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/emandi/mandi_contact',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+//working
+function mandi_trading(){
+        $data = array();
+        $data['page_id'] = 'page_-46';
+		$data['title'] = 'eNAM | Trading Details';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+                $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+                $data['sliders'] = $this->Slider_model->slider_list_client();
+                $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/emandi/trading',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+//working
+function weather_forecast(){
+        $data = array();
+        $data['page_id'] = 'page_-46';
+		$data['title'] = 'eNAM | Weather Forecast';
+		$data['keywords'] = 'eNAM Weather Forecast';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+		
+		$data['sliders'] = $this->Slider_model->slider_list_client();
+		$data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/emandi/weather_forecast',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+function stakeholderdata(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Stakeholder Data';
+		$data['keywords'] = 'eNAM emandi contact';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	        $data['languages'] = $this->Language_model->get_all_language();
+		
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+                $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+                $data['sliders'] = $this->Slider_model->slider_list_client();
+                $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/stack_holder/stakeholderdata',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+	
+	/// download commodity pdf list
+	function commodity_download(){
+	    $data = array();
+	    $l_id = $this->session->userdata('client_language');
+		$data['commodity'] = $this->db->query("SELECT ci.c_id,ci.commodity_name,cc.cg_name FROM commodities_item ci
+		join commodity c on c.c_id = ci.com_id
+		join commodity_category cc on cc.c_id = c.g_id 
+		WHERE ci.lang_id = ".$l_id." and ci.status = 1 and c.status = 1
+		order by c.g_id,ci.commodity_name")->result_array();
+		
+		$data['page_id'] = '800';
+		require_once(APPPATH.'third_party/Dompdf/autoload.inc.php');
+	    $pdf = new Dompdf\Dompdf();
+	    $html = $this->load->view('pages/pdf/commodity_pfd',$data,TRUE);
+	    $pdf->loadHtml($html);
+// 		$pdf->setPaper('A4','portrait');
+		$pdf->setPaper('A4','landscape');
+	    $pdf->render();
+	    $pdf->stream('commodity_list',array('Attachment'=>1));
+	}
+	
+	///view the commodity pdf version
+	function pdf(){
+	    $data = array();
+		$l_id = $this->session->userdata('client_language');
+		$data['commodity'] = $this->db->query("SELECT ci.c_id,ci.commodity_name,cc.cg_name FROM commodities_item ci
+		join commodity c on c.c_id = ci.com_id
+		join commodity_category cc on cc.c_id = c.g_id 
+		WHERE ci.lang_id = ".$l_id." and ci.status = 1 and c.status = 1
+		order by c.g_id,ci.commodity_name")->result_array();
+		$data['page_id'] = '800';
+		//$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		//$data['home_body'] = $this->Widget_model->home_content(); 	
+		$this->load->view('pages/pdf/commodity_pfd',$data);
+		//$this->load->view('comman/index',$data);
+	}
+	
+	/// download commodity pdf list
+	function commodity_parameter_download(){
+	    $data = array();
+	    $l_id = $this->session->userdata('client_language');
+	    $data['commodity'] = $this->db->query("SELECT cp.*,c.image as comm_image,cc.cg_name from commodity c 
+                join commodity_parameters cp on cp.comm_id = c.c_id
+                join commodity_category cc on cc.c_id = c.g_id
+                WHERE cp.status = 1
+                and c.status = 1
+                AND cp.lang_id = 1
+                and c.c_id = 118
+                order by c.g_id,cp.comm_name")->result_array();
+	    
+	    //$this->load->view('pages/pdf/commodity_parameter_pfd',$data);
+// 	    
+	    $data['page_id'] = '800';
+	    require_once(APPPATH.'third_party/Dompdf/autoload.inc.php');
+	    $pdf = new Dompdf\Dompdf();
+	    $html = $this->load->view('pages/pdf/commodity_parameter_pfd',$data,TRUE);
+	    $pdf->loadHtml($html);
+	    $pdf->setPaper('A4','portrait');
+	    $pdf->render();
+	    $pdf->stream('commodity_list',array('Attachment'=>0));
+	}
+
+	function eNam_blogs(){
+
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Blog';
+		$data['keywords'] = 'eNAM Blog';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+        $data['languages'] = $this->Language_model->get_all_language();
+		
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+
+		
+
+		$data['blog_data'] = $this->Enam_model->getblog_data();
+	
+		$data['recent_news'] = $this->Enam_model->getrecent_news();
+		$data['most_read'] = $this->Enam_model->getmost_read();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+		
+
+		$data['main_contant'] = $this->load->view('pages/blog/blog_home',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function updatecount(){
+
+		$data['id'] = $this->input->post('id');
+		$data['created_at'] = date('Y-m-d h:i:s');
+		$data['created_by'] = $this->session->userdata('user_id');
+		$response = $this->Enam_model->update_count($data);
+		echo json_encode($response);
+	}
+
+	function getimg(){
+		$id = $this->input->post('blogId');
+		$result = $this->Enam_model->getblogimg($id);
+
+		if($result){ 
+			echo json_encode(array('data'=>$result,'msg'=>'Blog Image Data.','status'=>200));
+		}
+		else{
+			echo json_encode(array('msg'=>'Something gone wrong.','status'=>500));
+		}
+	}
+
+	function enam_blog($id = null){
+        
+        $data['id'] = $id;
+        $data['page_id'] = 'page_5';
+	    $data['title'] = 'eNam | Blog';
+        $data['keywords'] = 'enam home';
+        $data['blogs_data'] = $this->Enam_model->getBlogDataByID($id);
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/blog/blog_id',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+
+	//POP Dashboard Functionalities
+
+	function pop_dashboard_home(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | POP Dashboard';
+		$data['keywords'] = 'eNAM POP Dashboard';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+        $data['languages'] = $this->Language_model->get_all_language();
+		
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/pop_dashboard',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function trading_service(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Trading Service';
+		$data['keywords'] = 'eNAM Trading Service';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+        $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/tradingservice_page',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function platformsIntegrated(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Platforms Integrated';
+		$data['keywords'] = 'eNAM Platforms Integrated';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+        $data['languages'] = $this->Language_model->get_all_language();
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+      
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/platformsintegrated',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function assayingService(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Quality Assaying';
+		$data['keywords'] = 'eNAM Quality Assaying';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/assaying_service',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function serviceProviders(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM |Service Providers';
+		$data['keywords'] = 'eNAM Service Providers';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/service_providers',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function transportationService(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Transportation Service';
+		$data['keywords'] = 'eNAM Transportation Service';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/logistics_service',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function transportationProvider(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM |Transportation Providers';
+		$data['keywords'] = 'eNAM Transportation Providers';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/logistics_providers',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function storageFacility(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Storage Facility';
+		$data['keywords'] = 'eNAM Storage Facility';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/storage_facility',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function storageFacilityProvider(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Storage Providers';
+		$data['keywords'] = 'eNAM Storage Providers';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/storage_providers',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function tradeDetails($state_id = null,$apmc = null){
+        $data['param_state'] = $state_id;
+        if($apmc != 'null'){
+            $this->db->select('apmc_id');
+            $result = $this->db->get_where('mandis',array('apmc_name'=>$apmc))->result_array();
+            
+			if(count($result)>0){
+                $apmc = $result[0]['apmc_id'];   
+             }				   
+        }
+        $data['param_apmc'] = $apmc; 
+        $data['page_id'] = 'page_5';
+	    $data['title'] = 'eNAM |Trade Details';
+        $data['keywords'] = 'enam Trade Details';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/pop/trade_details',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function advanceDemand(){
+       
+        $data['page_id'] = 'page_5';
+	    $data['title'] = 'eNAM |Advance Demand';
+        $data['keywords'] = 'enam Advance Demand';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/pop/advance_demand',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function advanceSupply(){
+        
+        $data['page_id'] = 'page_5';
+	    $data['title'] = 'eNAM |Advance Supply';
+        $data['keywords'] = 'enam Advance Supply';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/pop/advance_supply',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function advisoryServices(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Advisory Services';
+		$data['keywords'] = 'eNAM Advisory Services';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+        
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/advisory_services',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function financeServices(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Finance Services';
+		$data['keywords'] = 'eNAM Finance Services';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/banking_services',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function infoDissemination(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Information Dissemination';
+		$data['keywords'] = 'eNAM Information Dissemination';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/info_dissemination',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function endToEnd(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Institutional Buyer';
+		$data['keywords'] = 'eNAM Institutional Buyer';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/end_to_end',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+
+	function institutionalBuyer(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Institutional Buyer';
+		$data['keywords'] = 'eNAM Institutional Buyer';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/institutional_buyer',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function getHeadingData(){
+		$heading = $this->input->post('id');
+	
+		$lid = $this->session->userdata('client_language');
+		
+		$result = $this->Enam_model->fetchHeadingData($heading, $lid);
+
+		echo json_encode($result);
+	}
+
+
+	function shortingGrading(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Shorting Grading';
+		$data['keywords'] = 'eNAM Shorting Grading';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/shorting_grading',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+
+	function wdraPage(){
+
+
+		$url = 'https://enam.gov.in/pop/rest/queryapi/STORAGESTATELOV';
+		$ch = curl_init($url);
+		$data = array(
+		      "limit" => 0,
+			  "page" => 0,
+			  "param1" => "string",
+			  "param10"=> "string",
+			  "param2"=> "string",
+			  "param3"=> "string",
+			  "param4"=> "string",
+			  "param5"=> "string",
+			  "param6"=> "string",
+			  "param7"=> "string",
+			  "param8"=> "string",
+			  "param9"=> "string",
+			  "tokenopr"=>"string",
+			  "tokenorg"=> "string"
+		);
+		$payload = json_encode(array("user" => $data));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+		$apidata = json_decode($result);
+
+		$arrayData = json_decode(json_encode($apidata), true);
+
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | WDRA';
+		$data['keywords'] = 'eNAM WDRA';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+		//print_r($data['news']);
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['apiData'] = $arrayData;
+ 		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/pop_wdra',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function wdraDistrictData(){
+
+		$stateName = $this->input->post('stateValue') ;
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+	  	CURLOPT_URL => 'https://enam.gov.in/pop/rest/queryapi/STORAGEDISTRICTLOV',
+	  	CURLOPT_RETURNTRANSFER => true,
+	  	CURLOPT_ENCODING => '',
+	  	CURLOPT_MAXREDIRS => 10,
+	  	CURLOPT_TIMEOUT => 0,
+ 	 	CURLOPT_FOLLOWLOCATION => true,
+	  	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	  	CURLOPT_CUSTOMREQUEST => 'POST',
+	  	CURLOPT_POSTFIELDS =>'{
+		  "limit": 0,
+		  "page": 0,
+		  "param1": "'.$stateName.'",
+		  "param10": "string",
+		  "param2": "string",
+		  "param3": "string",
+		  "param4": "string",
+		  "param5": "string",
+		  "param6": "string",
+		  "param7": "string",
+		  "param8": "string",
+		  "param9": "string",
+		  "tokenopr": "string",
+		  "tokenorg": "string"
+		}',
+	  CURLOPT_HTTPHEADER => array(
+	    'Accept:  application/json',
+	    'Content-Type:  application/json',
+	    'Cookie: JSESSIONID=B0342EFB37ECC16881709A1F51F3875D; SERVERID=node34'
+	  ),
+	));
+
+	$response = curl_exec($curl);
+
+	curl_close($curl);
+
+	echo json_encode($response);
+
+	}
+
+	function wdraresponse(){
+
+		$stateName = $this->input->post('state');
+		$districtName = $this->input->post('district');
+		
+		if(!empty($stateName) && empty($districtName)){
+			//echo "here";exit;
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+		  	CURLOPT_URL => 'https://enam.gov.in/pop/rest/storage_capacity_by_location',
+		  	CURLOPT_RETURNTRANSFER => true,
+		  	CURLOPT_ENCODING => '',
+		  	CURLOPT_MAXREDIRS => 10,
+		  	CURLOPT_TIMEOUT => 0,
+	 	 	CURLOPT_FOLLOWLOCATION => true,
+		  	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  	CURLOPT_CUSTOMREQUEST => 'POST',
+		  	CURLOPT_POSTFIELDS =>'{
+			  "buyerId": "string",
+			  "commodityid": "string",
+			  "district": null,
+			  "fromDate": "string",
+			  "lotId": "string",
+			  "masterId": "string",
+			  "platformId": "string",
+			  "quoteDate": "string",
+			  "quoteId": "string",
+			  "quoteStatus": "string",
+			  "requestDate": "string",
+			  "requestId": "string",
+			  "requestStatus": "string",
+			  "sellerId": "string",
+			  "state": "'.$stateName.'",
+			  "toDate": "string",
+			  "trasportationStatus": "string",
+			  "village": "string"
+			}',
+			  CURLOPT_HTTPHEADER => array(
+			    'Accept:  application/json',
+			    'Content-Type:  application/json',
+			    'Cookie: JSESSIONID=B0342EFB37ECC16881709A1F51F3875D; SERVERID=node34'
+			  ),
+			));
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+
+			$arrData = array('stateData' => $response);
+			echo json_encode($arrData);
+
+		}
+
+		else if(!empty($stateName)  && !empty($districtName)){
+			
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+		  	CURLOPT_URL => 'https://enam.gov.in/pop/rest/storage_capacity_by_location',
+		  	CURLOPT_RETURNTRANSFER => true,
+		  	CURLOPT_ENCODING => '',
+		  	CURLOPT_MAXREDIRS => 10,
+		  	CURLOPT_TIMEOUT => 0,
+	 	 	CURLOPT_FOLLOWLOCATION => true,
+		  	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  	CURLOPT_CUSTOMREQUEST => 'POST',
+		  	CURLOPT_POSTFIELDS =>'{
+			  "buyerId": "string",
+			  "commodityid": "string",
+			  "district": "'.$districtName.'",
+			  "fromDate": "string",
+			  "lotId": "string",
+			  "masterId": "string",
+			  "platformId": "string",
+			  "quoteDate": "string",
+			  "quoteId": "string",
+			  "quoteStatus": "string",
+			  "requestDate": "string",
+			  "requestId": "string",
+			  "requestStatus": "string",
+			  "sellerId": "string",
+			  "state": "'.$stateName.'",
+			  "toDate": "string",
+			  "trasportationStatus": "string",
+			  "village": "string"
+			}',
+			  CURLOPT_HTTPHEADER => array(
+			    'Accept:  application/json',
+			    'Content-Type:  application/json',
+			    'Cookie: JSESSIONID=B0342EFB37ECC16881709A1F51F3875D; SERVERID=node34'
+			  ),
+			));
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+			$distData = array('distData' => $response);
+			echo json_encode($distData);
+		}
+	}
+
+
+	function agriInput(){
+        $data = array();
+        $data['page_id'] = 'page_-50';
+		$data['title'] = 'eNAM | Agri Input';
+		$data['keywords'] = 'eNAM Agri Input';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	
+	    $data['languages'] = $this->Language_model->get_all_language();
+	
+		$this->db->select('n.*,ni.*');
+		$this->db->join('news n','n.id = ni.news_id');
+		$this->db->order_by('n.created_at','desc');
+		$data['newses'] = $this->db->get_where('news_item ni',array('ni.lang_id'=>$this->session->userdata('client_language'),'n.status'=>1,'ni.status'=>1))->result_array();
+	
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+        $data['search_subscribe'] = $this->load->view('comman/home_search',$data,TRUE);
+                
+        $data['sliders'] = $this->Slider_model->slider_list_client();
+        $data['links'] = $this->Enam_model->all_links();
+		$data['quickLinks'] = $this->load->view('pages/comman/quickLinks',$data,TRUE);
+		$data['slider'] = $this->load->view('pages/comman/slider',$data,TRUE);
+
+		$data['main_contant'] = $this->load->view('pages/pop/agri_input',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+
+}

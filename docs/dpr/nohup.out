@@ -1,0 +1,502 @@
+--------------------------------------------------
+Activity Started at : 2025-04-30 17:58:43
+--------------------------------------------------
+2025-04-30 17:58:51 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-27, Report : /mnt/reports/dpr_2025-04-29.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 esadelnkn03.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 esadelnkn03.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 539147406 accepted
+>>> QUIT
+221 esadelnkn03.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-04-30 17:58:51
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-04-30 18:00:29
+--------------------------------------------------
+2025-04-30 18:00:38 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-26, Report : /mnt/reports/dpr_2025-04-29.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1480713050 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-04-30 18:00:39
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-04-30 18:00:50
+--------------------------------------------------
+2025-04-30 18:00:57 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-25, Report : /mnt/reports/dpr_2025-04-29.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1480713338 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-04-30 18:00:58
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 11:06:21
+--------------------------------------------------
+2025-05-01 11:06:29 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-27, Report : /mnt/reports/dpr_2025-04-30.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<-b>
+250 recipient <-b> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1188104 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 11:06:29
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 12:35:54
+--------------------------------------------------
+2025-05-01 12:36:03 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-30, Report : /mnt/reports/dpr_2025-04-30.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1069963736 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 12:36:05
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 13:11:51
+--------------------------------------------------
+2025-05-01 13:11:59 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-30, Report : /mnt/reports/dpr_2025-04-30.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 esadelnkn03.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 esadelnkn03.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 539533381 accepted
+>>> QUIT
+221 esadelnkn03.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 13:11:59
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 13:13:57
+--------------------------------------------------
+ERROR 1317 (70100) at line 1: Query execution was interrupted
+2025-05-01 13:25:29 : DPR Report(CSV format) Generation Failed for the date: 2025-04-30, Please Check the log -> /mnt/reports/dpr_status_2025-04-30.log
+--------------------------------------------------
+Activity Started at : 2025-05-01 13:26:12
+--------------------------------------------------
+2025-05-01 13:57:06 : DPR Report(CSV format) Generated Successfully for the date: 2025-04-30, Report : /mnt/reports/dpr_2025-04-30.csv
+2025-05-01 13:57:14 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-30, Report : /mnt/reports/dpr_2025-04-30.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1328614 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 13:57:14
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 14:08:33
+--------------------------------------------------
+2025-05-01 14:26:16 : DPR Report(CSV format) Generated Successfully for the date: 2025-04-27, Report : /mnt/reports/dpr_2025-04-27.csv
+2025-05-01 14:26:24 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-27, Report : /mnt/reports/dpr_2025-04-27.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1070024650 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 14:26:29
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 15:11:45
+--------------------------------------------------
+2025-05-01 16:11:35 : DPR Report(CSV format) Generated Successfully for the date: 2025-04-26, Report : /mnt/reports/dpr_2025-04-26.csv
+2025-05-01 16:11:43 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-26, Report : /mnt/reports/dpr_2025-04-26.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1481198966 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 16:11:43
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-01 17:02:45
+--------------------------------------------------
+2025-05-01 17:51:55 : DPR Report(CSV format) Generated Successfully for the date: 2025-04-25, Report : /mnt/reports/dpr_2025-04-25.csv
+2025-05-01 17:52:03 : DPR Report(PDF format) Generated Successfully for the date: 2025-04-25, Report : /mnt/reports/dpr_2025-04-25.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 esadelnkn03.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 esadelnkn03.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 539694567 accepted
+>>> QUIT
+221 esadelnkn03.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-01 17:52:03
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-19 12:58:35
+--------------------------------------------------
+2025-05-19 12:58:47 : DPR Report(PDF format) Generated Successfully for the date: 2025-05-18, Report : /mnt/reports/dpr_2025-05-18.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<adilshaik@fertis.in>
+250 recipient <adilshaik@fertis.in> ok
+>>> RCPT TO:<apoorva.chauhan@fertis.in>
+250 recipient <apoorva.chauhan@fertis.in> ok
+>>> RCPT TO:<chiranjiv.s@fertis.in>
+250 recipient <chiranjiv.s@fertis.in> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<dipen@fertis.in>
+250 recipient <dipen@fertis.in> ok
+>>> RCPT TO:<kspandana@fertis.in>
+250 recipient <kspandana@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> RCPT TO:<mitali@fertis.in>
+250 recipient <mitali@fertis.in> ok
+>>> RCPT TO:<rakesh@fertis.in>
+250 recipient <rakesh@fertis.in> ok
+>>> RCPT TO:<sateesh.vummalreddy@gmail.com>
+250 recipient <sateesh.vummalreddy@gmail.com> ok
+>>> RCPT TO:<suman.s@fertis.in>
+250 recipient <suman.s@fertis.in> ok
+>>> RCPT TO:<sunil.kaushik@fertis.in>
+250 recipient <sunil.kaushik@fertis.in> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1080937172 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-19 12:58:47
+--------------------------------------------------
+--------------------------------------------------
+Activity Started at : 2025-05-21 18:24:21
+--------------------------------------------------
+2025-05-21 18:43:30 : DPR Report(CSV format) Generated Successfully for the date: 2025-05-20, Report : /mnt/reports/dpr_2025-05-20.csv
+2025-05-21 18:43:39 : DPR Report(PDF format) Generated Successfully for the date: 2025-05-20, Report : /mnt/reports/dpr_2025-05-20.pdf
+Resolving host 164.100.14.95 . . . done.
+Connecting to 164.100.14.95:25 . . . connected.
+220 relayin.nic.in ESMTP
+>>> HELO ag23p-dbnode-004.webcloud3.nic.in
+250 relayin.nic.in
+>>> MAIL FROM:<Info-nam@gov.in>
+250 sender <Info-nam@gov.in> ok
+>>> RCPT TO:<-b>
+250 recipient <-b> ok
+>>> RCPT TO:<devops@fertis.in>
+250 recipient <devops@fertis.in> ok
+>>> RCPT TO:<mahanthiparthu@gmail.com>
+250 recipient <mahanthiparthu@gmail.com> ok
+>>> DATA
+354 go ahead
+>>> .
+250 ok:  Message 1082593565 accepted
+>>> QUIT
+221 relayin.nic.in
+--------------------------------------------------
+Activity Ended at : 2025-05-21 18:43:39
+--------------------------------------------------

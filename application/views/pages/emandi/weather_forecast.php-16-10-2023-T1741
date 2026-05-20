@@ -1,0 +1,156 @@
+<div class="container-fuild" style="float:left;width:100%;background-color:#eee;padding:10px 0% 12px 0%;">
+<!-- <div class="container"><?php //print_r($slider); ?></div> -->
+</div>
+
+
+<div class="container-fuild content-section" style="padding-top:10px;float:left;width:100%;padding-bottom:15px;">
+<div class="container">
+<div class="col-md-12 bc-nav"><a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp; <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;  <a href="<?php echo base_url(); ?>weather_forecast"><?php echo $this->lang_file->heading_fetch('weather_forecast');?></a>&nbsp; <i class="fa fa-angle-right"></i>
+		</div>
+<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('weather_forecast');?></span></h3>
+	<div class="col-sm-12  h-space-padd-r">
+		<div class="col-md-12 well e-contact-detail-box">
+			<div class="col-md-3 select-state-img">
+			<img alt="" style="margin-top:-5px;" src="<?php echo base_url(); ?>/assest/images/select-state.gif" />
+			</div>
+			<div class="col-md-3 contact-select-state"><select class="form-control" id="today_states">
+				<option value="0">Select State</option>
+			</select></div>
+	
+			<div class="col-md-3 contact-select-dist" style=""><select class="form-control col-md-4" id="today_mandi">
+				<option value="0">Select APMC's</option>
+			</select></div>	
+		</div>
+	</div>
+	
+	<table class="table" id="mandi_table" style="width: 82.05%;border-left: solid 6px #EBEBEB;border-right: solid 6px #EBEBEB;border-bottom: solid 6px #EBEBEB">
+       	<div id="table_top_statename" class="col-md-10" style="display:none;background: #EBEBEB;width: 82%;padding-bottom: 5px;padding-top: 5px">
+          	<div style="background: gray">	<b class="pull-left">
+	          		APMC: <b id="table_top_apmcname_text"></b> , <b id="table_top_statename_text"></b>
+	          
+				</b><span class="pull-right">Updated on -	<span id="update_date"></span></span></div>
+				</b>
+			   </div>
+	</table>
+
+</div>
+</div>
+
+<script type="text/javascript">
+	var baseUrl = $('#base_url').val();
+
+    $.ajax({
+    type: 'POST',
+    url: 'https://train.enam.gov.in/NamWebSrv/rest/mobile/getEnrolledMandis',
+    dataType: "json",
+    data: {},
+    beforeSend: function(){},
+    complete: function(){},
+    success:function (response) {
+        console.log(response);
+        if(response.statusMsg == 'S'){
+            var x = '<option>Select State</option>';
+            
+            var uniqueStateNames = []; // Array to hold unique state names
+            
+            $.each(response.listEnrolledMandis, function(key, value) {
+                if (!uniqueStateNames.includes(value.stateName)) {
+                    uniqueStateNames.push(value.stateName);
+                    x = x + `<option value="${value.stateName}">${value.stateName}</option>`;
+                }
+            });
+            
+            $('#today_states').html(x);
+        }
+        else {
+            // Handle the case where response statusMsg is not 'S'
+        }
+    }
+    });
+
+	
+    $(document).on('change', '#today_states', function() {
+    var selectedStateName = $('#today_states option:selected').text();
+
+    $.ajax({
+        type: 'POST',
+        url: 'https://train.enam.gov.in/NamWebSrv/rest/mobile/getEnrolledMandis',
+        dataType: 'json',
+        data: {},
+        beforeSend: function() {
+            $('#today_mandi').html('<option value="0">Select APMC\'s</option>');
+        },
+        complete: function() {},
+        success: function(response) {
+            console.log(response);
+            if (response.statusMsg == 'S') {
+                var x = '<option>Select APMC\'s</option>';
+
+                $.each(response.listEnrolledMandis, function(key, value) {
+                    if (value.stateName === selectedStateName) {
+                        x = x + `<option value="${value.mandiName}">${value.mandiName}</option>`;
+                    }
+                });
+
+                $('#today_mandi').html(x);
+            } else {
+                // Handle the case where response statusMsg is not 'S'
+            }
+        }
+    });
+    });
+
+	    
+$(document).on('change', '#today_mandi', function() {
+    var state_name = $('#today_states').val();
+    var mandi_id = $('#today_mandi').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: 'https://enam.gov.in/NamWebSrv/rest/mobile/wheatherForeCast/getWheatherForeCast',
+        dataType: 'json',
+        data: {
+            "wfStateName": state_name,
+            "wfApmcName": mandi_id
+        },
+        beforeSend: function() {},
+        complete: function() {},
+        success: function(response) {
+            if (response.wheaterForeCastModelList.length === 0) {
+                $('#table_top_statename').css('display', 'none');
+                $('#mandi_table').html('No record.');
+            } else {
+                var x = '';
+                
+                // Loop through the weather forecast data
+                $.each(response.wheaterForeCastModelList, function(key, value) {
+                    var i = 0;
+                    var j = 0;
+                    
+                    if (i == j) {
+                        $('#table_top_statename_text').html(state_name);
+                        $('#table_top_statename').css('display', 'block');
+                        $('#table_top_apmcname_text').html(mandi_id);
+                        $('#table_top_apmcname').css('display', 'block');
+                        let date = new Date().toLocaleDateString();                         
+                        $('#update_date').html(date); // Set the formatted date
+                        
+                        
+                        x = '<tr>' +
+                            '<td width="10%" style="font-size:14px;padding-top:12px;">' + ' <b ><?php date_default_timezone_set("Asia/Kolkata"); echo date("D <\b\\r> m/j"); ?></b>' + '</td>' +
+                            '<td td width="15%"><b style="font-size:35px">' + value.wfMaxTemp + '&deg;<small>c</small></b><span  style="font-size:15px">/' + value.wfMinTemp + '&deg;<small>c</small></span></td>' +
+                            '<td style="font-size:15px;padding-top:20px;padding-left:35px">' + value.wfTodaysForecast + '</td>' +
+                            '</tr>';
+                        
+                        $('#mandi_table').html(x);
+                        $('#today_states').val('Select State');
+                        $('#today_mandi').html('<option value="0">Select APMC\'s</option>');
+                    }
+                });
+            }
+        }
+    });
+});
+
+	
+</script>

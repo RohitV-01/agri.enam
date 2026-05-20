@@ -1,0 +1,192 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Feedback_ctrl extends CI_Controller {
+
+	function __construct(){
+		parent :: __construct();
+		$this->load->helper(array('url','file'));
+		$this->load->database();
+		$this->load->library('email');
+		$this->load->model(array('admin/Language_model','admin/Widget_model','admin/Menu_model','Enam_model'));
+		$this->load->library(array('session','substring','lang_file'));
+		if(!$this->session->userdata('client_language')){
+			$newdata = array(
+					'client_language'  => '1'
+			);
+		}
+		else{
+			$newdata = array(
+					'client_language'  => $this->session->userdata('client_language'),
+			);
+		}
+			$this->session->set_userdata($newdata);
+	}
+
+	public function feedback()
+	{ 
+ 		$data['page_id'] = 'page_10';
+		$data['title'] = 'eNAM | training_feedback';
+		$data['keywords'] = 'enam training_feedback';
+		$data['head'] = $this->load->view('comman/head',$data,TRUE);
+	    $data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/training_feedback/train_feedback',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+    function states_name(){
+		$this->db->select('state_name,state_id');
+                $this->db->order_by('state_name','ASC');
+		$result = $this->db->get_Where('states',array('status'=>1))->result_array();
+               if(count($result)>0){
+
+			echo json_encode(array('data'=>$result,'status'=>200));
+		}
+		else{
+			echo json_encode(array('status'=>500));
+		}
+	}
+
+
+      function apmc_list(){
+           $state_id = (int)$this->input->post('state_id');
+           $this->db->select('distinct(apmc_id) as apmc_id,apmc_name');
+           $result = $this->db->get_where('mandis',array('state_id'=>$state_id))->result_array();
+
+         if(count($result)>0){
+			echo json_encode(array('data'=>$result,'status'=>200));
+		}
+		else{
+			echo json_encode(array('status'=>500));
+		}
+        } 
+
+
+        public function feedback_save(){
+	//	print_r($_POST);exit;
+		if ($_POST) {
+
+			if ($this->input->post('name')) {
+			$name = $this->input->post('name');
+			} else{
+				$name='';
+			}
+			if ($this->input->post('contact_no')) {
+				$contact_no = $this->input->post('contact_no');
+			} else{
+				$contact_no='';
+			}
+			if ($this->input->post('village')) {
+				$village = $this->input->post('village');
+			} else{
+				$village='';
+			}
+			if ($this->input->post('email_id')) {
+				$email_id = $this->input->post('email_id');
+			} else{
+				$email_id='';
+			}
+			if ($this->input->post('feed_state')) {
+				$state = $this->input->post('feed_state');
+			} else{
+				$state='';
+			}
+			if ($this->input->post('feed_apmc')) {
+				$apmc = $this->input->post('feed_apmc');
+			} else{
+				$apmc='';
+			}
+			if ($this->input->post('category')) {
+				$category = $this->input->post('category');
+			} else{
+				$category='';
+			}
+			if ($this->input->post('questionId')) {
+				$questionId = $this->input->post('questionId');
+			} else{
+				$questionId='';
+			}
+
+			if ($this->input->post('rating$questionId')) {
+				$rating = $this->input->post('rating$questionId');
+			} else{
+				$rating='';
+			}
+
+					for ($i=0; $i < count($questionId) ; $i++)
+					 { 
+					 	$str = $_POST['questionId'][$i];
+					 	$str2 = $_POST["rating$str"];
+
+					 	if ($str2 == 0) {
+					 		/*echo "<script>alert('count($str2)')</script>";*/
+					 	}
+					 	else
+					 	{
+					 			$datafornominee[$i] = [	
+								'questionId'=>$questionId[$i],
+								'rating'=> $str2,
+      							'defunct'=> "N"
+											 ];
+					 	}	
+
+					}
+
+				if ($datafornominee == '') {
+					echo "<script>alert('Please get atleast one rating!');window.location.href = 'https://enam.gov.in/web/training_feedback';</script>";
+				}
+				//print_r($datafornominee);echo "<br>";
+				$data = array(
+						  "userName"=> $name,
+						  "userMail"=> $email_id,
+						  "userContact"=> $contact_no,
+						 /* "userId"=>  "20101497255",*/
+						   "oprId" => (int)$apmc,
+						  "category"=> $category ,
+						  "stateId"=> $state,
+						  "villageName"=> $village,
+	                      "model"   => $datafornominee    
+	                        );
+
+	     /*  	$json_push_data = json_encode($data);
+			print_r($json_push_data);exit;*/
+
+			// kvstore API url
+			$url = 'https://enam.gov.in/NamWebSrv/rest/mobile/feedback/postFeedbackQuestionnaire';
+			//$url = 'http://192.168.1.232:8080/NamWebSrv/rest/mobile/feedback/postFeedbackQuestionnaire';
+			// Initializes a new cURL session
+			$curl = curl_init($url);
+			// Set the CURLOPT_RETURNTRANSFER option to true
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			// Set the CURLOPT_POST option to true for POST request
+			curl_setopt($curl, CURLOPT_POST, true);
+			// Set the request data as JSON using json_encode function
+			curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
+			// Set custom headers for RapidAPI Auth and Content-Type header
+			curl_setopt($curl, CURLOPT_HTTPHEADER, [
+			  'Content-Type: application/json'
+			]);
+			// Execute cURL request with all previous settings
+			$response = curl_exec($curl);
+			// Close cURL session
+			curl_close($curl);
+			//echo $response . PHP_EOL;
+			echo "<script>alert('Your Valuable Feedback was Submitted Successfully!');window.location.href = 'https://enam.gov.in/web/training_feedback';</script>";
+	
+		}
+	}
+	
+
+
+
+
+
+
+
+
+}
+?>

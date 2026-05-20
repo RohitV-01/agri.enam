@@ -1,0 +1,46 @@
+<?php
+
+ $sr_no = $this->lang_file->heading_fetch('unified_licence_sr_no');//S.No.
+ $state_ut = $this->lang_file->heading_fetch('unified_licence_state_ut');//Name of State/UT	
+ $m_register_enam = $this->lang_file->heading_fetch('unified_licence_m_register_enam');//Mandis registered on e-NAM
+ $t_register_enam = $this->lang_file->heading_fetch('unified_licence_t_register_enam');//Registered Traders on e-NAM	
+ $issue_by_state = $this->lang_file->heading_fetch('unified_licence_issue_by_state');//No. of Unified licenses issued by State
+
+$table = '<div class="col-sm-2" style="width:100%;"><table class="table table-bordered unified">
+		<tr>
+			<th>'.$sr_no.'</th>
+			<th>'.$state_ut.'</th>
+			<th>'.$m_register_enam.'</th>
+			<th>'.$t_register_enam.'</th>
+			<th>'.$issue_by_state.'</th>
+		</tr>';
+	$i = 1;
+	$mandis_registered = '';
+	$registered_traders = '';
+	$unified_licence = '';
+	
+
+foreach($unified as $u){ 
+	$table .= '<tr>'.
+			'<td>'.$i.'</td>'.
+		'<td>'.$u['name_state'].'</td>'.
+		'<td>'. $this->substring->numbers($u['mandis_registered']).'</td>'.
+		'<td>'. $this->substring->numbers($u['registered_traders']).'</td>'.
+		'<td>'.$this->substring->numbers($u['unified_licence']).'</td>'.
+	'</tr>';
+	$i++;
+	$mandis_registered = (int)$mandis_registered + (int)$u['mandis_registered'] ;
+	$registered_traders = (int)$registered_traders+ (int)$u['registered_traders'];
+	$unified_licence = (int)$unified_licence+ (int)$u['unified_licence'];
+}
+
+$table .= '<tr>
+			<td colspan="2"><b>Total</b></td>
+			<td><b>'.$this->substring->numbers($mandis_registered).'</b</td>
+					
+			<td><b>'.$this->substring->numbers($registered_traders).'</b></td>
+			<td><b>'.$this->substring->numbers($unified_licence).'</b></td>
+		</tr>
+		</table></div>';
+print_r($table);
+?>

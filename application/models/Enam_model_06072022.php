@@ -1,0 +1,180 @@
+<?php
+class Enam_model extends CI_Model {
+	
+	function __construct(){
+		parent :: __construct();
+		$this->load->helper(array('url','file'));
+		$this->load->database();
+		$this->load->library(array('session'));
+	}
+	function all_news(){
+		$l_id = $this->session->userdata('client_language');
+		if($l_id == ''){
+			$l_id = 1;
+		}
+		
+// 		$this->db->select('*');
+// 		$this->db->join('news_item ni','ni.news_id = n.id');
+// 		$this->db->order_by('n.sort,n.created_at,n.updated_at','ASC');
+// 		$this->db->or_where('(lang_id',$l_id);
+// 		$this->db->or_where('lang_id','1)',FALSE);
+// 		$result = $this->db->get_where('news n',array('n.status'=>1,'ni.status'=>1,'n.publish'=>1))->result_array();
+		
+		
+		
+		$result = $this->db->query("select * from ((SELECT ni.*,n.sort
+            FROM `news` `n` JOIN `news_item` `ni` ON `ni`.`news_id` = `n`.`id` WHERE lang_id = 1 
+            and n.id not in (SELECT n.id
+            FROM `news` `n` JOIN `news_item` `ni` ON `ni`.`news_id` = `n`.`id` WHERE lang_id = ".$l_id." AND `n`.`status` = 1 AND `ni`.`status` = 1 AND `n`.`publish` = 1 ORDER BY `n`.`sort` ASC, `n`.`created_at` ASC, `n`.`updated_at` ASC)
+            AND `n`.`status` = 1 AND `ni`.`status` = 1 AND `n`.`publish` = 1 ORDER BY `n`.`sort` ASC, `n`.`created_at` ASC, `n`.`updated_at` ASC)
+            
+            UNION 
+            (SELECT ni.*,n.sort
+            FROM `news` `n` JOIN `news_item` `ni` ON `ni`.`news_id` = `n`.`id` WHERE lang_id = ".$l_id." AND `n`.`status` = 1 AND `ni`.`status` = 1 AND `n`.`publish` = 1 ORDER BY `n`.`sort` ASC, `n`.`created_at` ASC, `n`.`updated_at` ASC)) as t1 ORDER BY sort ASC, created_at ASC, updated_at ASC")->result_array();
+		
+		return $result;
+	}
+	
+	function all_menus(){
+	    $l_id = $this->session->userdata('client_language');
+	    
+	    // 		if($l_id == ''){
+	    // 			$l_id = 1;
+	    // 		}
+	    // 		$this->db->select('*');
+	    // 		$this->db->join('menu_item mi','mi.menu_id = m.id');
+	    // 		$this->db->order_by('m.sort,m.created_at,m.updated_at','ASC');
+	    // 		$this->db->where('lang_id',$l_id);
+	    // 		$result = $this->db->get_where('menu m',array('m.status'=>1,'mi.status'=>1))->result_array();
+	    // 		print_r($this->db->last_query());die;
+	    
+	    $result = $this->db->query("Select * From ((SELECT mi.*,m.id,m.page_id,m.p_id,m.cms_url,m.external_link FROM `menu` m
+            JOIN menu_item mi ON m.id = mi.menu_id
+            WHERE m.status = 1 AND mi.status = 1 AND mi.lang_id = 1 AND m.id NOT IN (SELECT m.id FROM `menu` m
+            JOIN menu_item mi ON m.id = mi.menu_id
+            WHERE m.status = 1 AND mi.status = 1 AND mi.lang_id = ".$l_id."))
+            UNION
+            (SELECT mi.*,m.id,m.page_id,m.p_id,m.cms_url,m.external_link FROM `menu` m
+            JOIN menu_item mi ON m.id = mi.menu_id
+            WHERE m.status = 1 AND mi.status = 1 AND mi.lang_id = ".$l_id.")) t1 order by t1.id")->result_array();
+	    //print_r($this->db->last_query());die;
+	    
+	    return $result;
+	}
+	
+	function all_links(){
+	    $l_id = (int)$this->session->userdata('client_language');
+	    
+	    // 		$this->db->select('*');
+	    // 		$this->db->join('quick_links_item qli','qli.link_id = ql.id');
+	    // 		$this->db->order_by('ql.sort,ql.created_at,ql.updated_at','ASC');
+	    // 		$this->db->where('lang_id',$l_id)->or_where('lang_id',1);
+	    
+	    // 		$this->db->group_by('ql.id');
+	    // 		$result = $this->db->get_where('quick_links ql',array('ql.status'=>1,'qli.status'=>1,'ql.publish'=>1))->result_array();
+	    
+	    $result = $this->db->query("SELECT t1.* FROM ((SELECT qli.*,ql.id as ql_id
+            FROM `quick_links` `ql`
+            JOIN `quick_links_item` `qli` ON `qli`.`link_id` = `ql`.`id`
+            WHERE ql.publish = 1 AND ql.status = 1 AND qli.status = 1 AND qli.lang_id = 1 AND ql.id NOT IN (SELECT ql.id FROM `quick_links` `ql`
+            JOIN `quick_links_item` `qli` ON `qli`.`link_id` = `ql`.`id`
+            WHERE ql.publish = 1 AND ql.status = 1 AND qli.status = 1 AND qli.lang_id = ".$l_id."))
+            UNION
+            (SELECT qli.*,ql.id as ql_id  FROM `quick_links` `ql`
+            JOIN `quick_links_item` `qli` ON `qli`.`link_id` = `ql`.`id`
+            WHERE ql.publish = 1 AND ql.status = 1 AND qli.status = 1 AND qli.lang_id = ".$l_id.")) t1 ORDER BY t1.ql_id")->result_array();
+	    
+	    return $result;
+	}
+
+
+	function record_count() {
+       return $this->db->count_all("blogs");
+   	}
+
+
+	function getblog_data(){
+
+        $sql = "SELECT bi.*,b.b_id, b.blog_image, b.user_click, DATE_FORMAT(b.created_at, '%d-%b-%Y / %h:%i %p') creatingd_at FROM blogs_item bi
+				JOIN blogs b ON bi.blog_Id = b.b_id
+				WHERE b.publish = 1 AND b.status = 1
+				ORDER BY b.sort";
+
+		$result = $this->db->query($sql);
+
+        return $result->result();
+
+	}
+
+	function getrecent_news(){
+		$sql = "SELECT DISTINCT(b.b_id),bi.title, bi.publisher, b.blog_image, b.user_click, DATE_FORMAT(b.created_at, '%d-%b-%Y / %h:%i %p') created_at FROM blogs_item bi
+				JOIN blogs b ON b.b_id = bi.blog_Id
+				WHERE b.publish = 1 AND b.status =1 AND b.created_at > now() - INTERVAL 3 MONTH  ORDER BY b.b_id DESC LIMIT 10"; //b.publish = 1 and 
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
+	function getmost_read(){
+
+		$sql = "SELECT b.b_id, bi.title,bi.publisher, b.blog_image, DATE_FORMAT(b.created_at, '%d-%b-%Y / %h:%i %p')created_at, b.user_click FROM blogs_item bi
+				JOIN blogs b ON b.b_id = bi.blog_Id
+				WHERE b.publish = 1 AND b.status =1 ORDER BY b.user_click DESC LIMIT 10"; //b.publish = 1 and 
+		$result = $this->db->query($sql);
+		return $result->result_array();
+
+	}
+
+	function update_count($data){
+
+		$this->db->select('user_click');
+        $result1 = $this->db->get_where('blogs',array('b_id'=>$data['id']))->result_array();
+        
+		if(count($result1)>0){
+            $userclick = $result1[0]['user_click'] + 1;   
+     	}				  
+
+		$this->db->where(array('b_id'=>$data['id']));
+		$this->db->update('blogs', array(
+				'updated_by' => $data['created_by'],
+				'updated_at' => $data['created_at'],
+				'user_click' =>  $userclick
+		));
+
+		$this->db->select('user_click');
+		$result = $this->db->get_where('blogs', array('b_id'=>$data['id']));
+		return $result->result_array();
+
+	}
+
+	function getblogimg($id){
+		$sql = "SELECT b.blog_image, bi.title FROM blogs b
+				INNER JOIN blogs_item bi ON b.b_id = bi.bi_id WHERE b.b_id = $id;";
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
+
+	function getBlogDataByID($id){ 
+        $sql = "SELECT bi.*,b.b_id, b.blog_image, b.user_click, DATE_FORMAT(b.created_at, '%d-%b-%Y / %h:%i %p') creatingd_at FROM blogs_item bi
+				JOIN blogs b ON bi.blog_Id = b.b_id
+				WHERE b.publish = 1 AND b.status = 1 AND b.b_id = $id
+				ORDER BY b.sort";
+
+		$result = $this->db->query($sql);
+        return $result->result();	 	
+	}
+
+	function fetchHeadingData($heading, $lid){
+
+		$sql2 = "SELECT * from heading_item WHERE heading_id = (select id from heading WHERE heading = '$heading') and language_id in ('$lid') AND status = 1";
+
+		$resultArr = $this->db->query($sql2);
+
+		return $resultArr->result_array();
+	}
+
+
+
+
+
+}

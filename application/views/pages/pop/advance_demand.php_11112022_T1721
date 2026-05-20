@@ -1,0 +1,213 @@
+<style type="text/css">
+	#loader { 
+    	display: none;
+	 	position: fixed;
+	  	top: 0;
+	  	left: 0;
+	  	right: 0;
+	  	bottom: 0;
+	  	width: 100%;
+	  	background: rgba(0,0,0,0.75) url(<?php echo base_url();?>assest/images/gif-load.gif) no-repeat center center;
+	  	z-index: 10000;
+	}
+</style>
+<?php 
+if(isset($param_state) && isset($param_apmc)){ ?>
+  	<input type="hidden" id="state_id_param" value="<?php echo $param_state; ?>">
+  	<input type="hidden" id="apmc_id_param" value="<?php echo $param_apmc; ?>">
+<?php }?>
+
+<section class="title-header-bg-apmc"></section>
+<section class="container-fuild content-section emandi-sec" >
+	<div class="container">
+		<div class="" style="margin-top:10px;">
+			<div class="col-md-12 bc-nav" >
+				<a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard"><?php echo $this->lang_file->heading_fetch('pop_dashboard');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard/trading-platforms"><?php echo $this->lang_file->heading_fetch('trading_platform');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<?php echo $this->lang_file->heading_fetch('advance_demand');?>
+			</div>
+			<?php date_default_timezone_set("Asia/Kolkata");
+				$date = date("Y-m-d");
+			?>
+
+			<div class="col-sm-9 content-9 h-space-padd-r" >
+				<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('advance_demand');?><p class="t-stake-data"><a id="backBtn"><b><?php echo $this->lang_file->heading_fetch('back');?></b>  <img src="<?php echo base_url(); ?>assest/images/pop/back-arrow.png" style="width: 20px;"></a></p></span></h3>
+				
+				<div class="container col-sm-12 well e-trade-detail-box">
+					<div class="row">
+						<div class="col-md-4" style="padding-left: 84px">
+							<label>From Date</label>
+							<input type="date" name="fromDate" id="fromDate" class="form-control" max="<?php echo $date;?>" value="<?php echo date("Y-m-d")?>">
+							
+						</div>
+						<div class="col-md-4" style="padding-right: 75px;">
+							<label>To Date</label>
+							<input type="date" name="toDate" id="toDate" class="form-control" max="<?php echo $date;?>" value="<?php echo date("Y-m-d")?>">
+						</div>
+						<div class="col-md-2" style="padding-top: 24px;margin-left: -33px">
+							<button class="btn btn-primary" id="submitbtn">Submit</button>
+						</div>
+						
+					</div>
+				</div>
+
+				<br><br><br>
+				<div class="col-md-12 table-responsive" style="margin-top: 11px;padding-left: 2px;padding-right: 0px;">	
+					<table class="table table-striped table-bordered" id="platformtable" style="display:none;">
+						<thead>
+							<tr>
+								<th rowspan="2" style="text-align:center;">Sr. No.</th>
+								<th rowspan="3" width="10%" style="text-align:center;">Date</th>
+								<th rowspan="2" style="text-align:center;">Buyer Name</th>
+								<th rowspan="2" style="text-align:center;">Buyer Location</th>
+								<th rowspan="2" style="text-align:center;">Buyer State</th>
+								<th rowspan="2" style="text-align:center;">Buyer Mobile No.</th>
+								<th rowspan="2" style="text-align:center;">Buyer Email Address</th>
+								<th rowspan="2" style="text-align:center;">Platform Name</th>
+								<th rowspan="2" style="text-align:center;">Total Demand Count</th>
+								<th rowspan="2" style="text-align:center;">View Details</th>
+							</tr>
+						</thead>
+
+						<tbody class="tbody" id="demand_data">
+										
+						</tbody>
+					</table>
+				</div>
+				<h2 id="no_data" style="display: none; text-align:center;">No data found..</h2>
+			</div>
+			<div class="col-sm-3 content-3 h-space-padd-r-l">
+				<div class="focus-section">
+					<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+					<div class="home-ind-map">
+						<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Modal for view details -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered" role="document">
+    	<div class="modal-content">
+	      	<div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">More Details</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+	      	</div>
+	      	<div class="modal-body">
+				<table class="table table-striped table-bordered" id="view_details">
+					<thead>
+						<tr>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Sr. No.</th>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Commodity Name</th>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Location</th>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Quantity</th>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Quantity UOM</th>
+							<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Grade</th>
+						</tr>
+					</thead>
+
+					<tbody class="tbody">
+					
+					</tbody>
+				</table>	
+	      	</div>
+    	</div>
+  	</div>
+</div>
+
+<div id="loader"></div>
+
+
+
+<script type="text/javascript">
+	$('#backBtn').click(function(){
+		parent.history.back();
+	});
+
+
+	var spinner = $('#loader');
+
+	$(document).on('click','#submitbtn',function(){
+		spinner.show();
+		let fromDate = $("#fromDate").val();
+		let toDate = $("#toDate").val();
+
+		$.ajax({
+			url: '<?php echo base_url();?>/Enam_ctrl/getAdvanceDemandData',
+			method: 'POST',
+			dataType:'json',
+			data:{
+				fromDate:fromDate,
+				toDate:toDate
+			},
+			success:function(response){
+				let resData = jQuery.parseJSON(response);
+				let i = 1;
+				let t = 0;
+				var tempArr = [];
+				let tableData = '';
+
+				//console.log('===>>resData ==>>',resData.data);
+
+				let checkEmpty = Object.keys(resData.data).length === 0 && resData.data.constructor === Object;
+
+				if(checkEmpty){
+					spinner.hide();
+					$('#platformtable').css('display','none');
+					$('#no_data').css('display','block');
+				}else{
+					spinner.hide();
+					$('#no_data').css('display','none');
+					$('#platformtable').css('display','block');
+					for(let data of resData.data.popbuyerdemandmstlist){
+						//console.log('to check date', data);
+					tempArr.push(data.popbuyerdemanddtl);
+					tableData+=`<tr>
+									<td>${i++}</td>
+									<td>${data.createdon.substring(0, data.createdon.indexOf(' '))}</td>
+									<td>${data.buyername}</td>
+									<td>${data.buyerlocation}</td>
+									<td>${data.buyerstate}</td>
+									<td>${data.buyermobile}</td>
+									<td>${data.buyeremailid}</td>
+									<td>${data.platformname}</td>
+									<td>${data.popbuyerdemanddtl.length}</td>
+									<td><button class='btn btn-info btn-sm v-id' data-id="${data.popbuyerdemandmstid}" data-tid=${t++} data-toggle="modal" data-target="#exampleModalCenter">View Details</button></td>
+								</tr>`;
+				}
+
+				$('#platformtable tbody').html(tableData);
+
+				$(document).on('click','.v-id', function(){ 
+					let j = 1;
+					let viewData = '';
+					let variId = $(this).data("id");
+					let refId = $(this).data("tid");
+					for (let test of tempArr[refId]) {
+						viewData+=`<tr>
+									<td>${j++}</td>
+									<td>${test.commodity}</td>
+									<td>${test.location}</td>
+									<td>${test.qty}</td>
+									<td>${test.qtyuomdesc}</td>
+									<td>${test.grade}</td>
+								</tr>`;
+					}
+					$('#view_details tbody').html(viewData);
+				});
+			}
+				
+			}
+		})
+	})
+
+
+
+</script>
+

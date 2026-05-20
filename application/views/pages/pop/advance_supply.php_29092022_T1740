@@ -1,0 +1,1637 @@
+<?php 
+if(isset($param_state) && isset($param_apmc)){ ?>
+  	<input type="hidden" id="state_id_param" value="<?php echo $param_state; ?>">
+  	<input type="hidden" id="apmc_id_param" value="<?php echo $param_apmc; ?>">
+<?php }?>
+
+<section class="title-header-bg-apmc"></section>
+<section class="container-fuild content-section emandi-sec" >
+	<div class="container">
+		<div class="" style="margin-top:10px;">
+			<div class="col-md-12 bc-nav" >
+				<a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard"><?php echo $this->lang_file->heading_fetch('pop_dashboard');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard/trading-platforms"><?php echo $this->lang_file->heading_fetch('trading_platform');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<?php echo $this->lang_file->heading_fetch('advance_supply');?>
+			</div>
+			<?php date_default_timezone_set("Asia/Kolkata");
+				$date = date("Y-m-d");
+			?>
+
+			<div class="col-sm-9 content-9 h-space-padd-r">
+				<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('advance_supply');?><p class="t-stake-data"><a id="backBtn"><b><?php echo $this->lang_file->heading_fetch('back');?></b>  <img src="<?php echo base_url(); ?>assest/images/pop/back-arrow.png" style="width: 20px;"></a></p></span></h3>
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-10" style="padding-bottom:20px;">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-10">
+							<b><?php echo $this->lang_file->heading_fetch('pop_commodity');?> </b>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control" name="commodity_list" id="commodity_list">
+								<option value="all"><?php echo $this->lang_file->heading_fetch('all');?></option>
+								<option value="Wheat">Wheat</option>
+								<option value="Castor">Castor</option>
+								<option value="Maize">Maize</option>
+								<option value="Cotton">Cotton</option>
+								<option value="Potato">Potato</option>
+								<option value="Tomato">Tomato</option>
+								
+							</select>
+							<div class="text-danger" id="regtype_error" style="display:none;"></div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-10" style="padding-bottom:20px;">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-10">
+							<b><?php echo $this->lang_file->heading_fetch('pop_location');?></b>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control" name="location_list" id="location_list">
+								<option value="all"><?php echo $this->lang_file->heading_fetch('all');?></option>
+								<option value="Adoni">Adoni</option>
+								<option value="Ambala">Ambala</option>
+								<option value="Birbhum">Birbhum</option>
+								<option value="Bhopal">Bhopal</option>
+								<option value="Guntur">Guntur</option>
+								<option value="Hyderabad">Hyderabad</option>
+								<option value="Indore">Indore</option>
+								<option value="Medak">Medak</option>
+								
+							</select>
+							<div class="text-danger" id="regtype_error" style="display:none;"></div>
+						</div>
+						<button class="btn btn-primary" id="submitbtn"><?php echo $this->lang_file->heading_fetch('pop_submit');?></button>
+					</div>
+
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="padding-bottom:20px;">
+						
+					</div>
+				</div>
+				<br><br>
+				<div class="col-md-12 table-responsive">	
+					<table class="table table-striped table-bordered" id="platformtable" style="display:none;">
+						<thead>
+							<tr>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Sr. No.</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Seller Name</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Commodity</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Expected Date of Selling</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Expected Available Quantity</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">UOM</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Selling Location</th>
+							</tr>
+						</thead>
+
+						<tbody class="tbodya" id="all_data">
+							<tr>
+								<td>1</td>
+								<td>Anand</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Ram</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Hyderabad</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Dipen</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Bhagvathi</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Nirav</td>
+								<td>Potato</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>Srinivas</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>Prasad</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>Uday</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>53</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>Srikrishna</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>Lakshmi</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>11</td>
+								<td>Kishore</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Birbhum</td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td>Narendra</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>						
+						</tbody>
+
+						<tbody class="tbodya" id="wheat_data">
+							<tr>
+								<td>1</td>
+								<td>Anand</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Prasad</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Srikrishna</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+						</tbody>
+
+						<tbody class="tbodya" id="wheatambala_data">
+							<tr>
+								<td>1</td>
+								<td>Anand</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Prasad</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="wheatindore_data">
+							<tr>
+								<td>1</td>
+								<td>Srikrishna</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="castor_data">
+							<tr>
+								<td>1</td>
+								<td>Ram</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Hyderabad</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Narendra</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>	
+							
+						</tbody>
+
+						<tbody class="tbodya" id="castorhyd_data">
+							<tr>
+								<td>1</td>
+								<td>Ram</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Hyderabad</td>
+							</tr>
+						</tbody>
+						<tbody class="tbodya" id="castoradoni_data">
+							<tr>
+								<td>1</td>
+								<td>Narendra</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>	
+							
+						</tbody>
+
+						<tbody class="tbodya" id="maize_data">
+							<tr>
+								<td>1</td>
+								<td>Dipen</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Srinivas</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>	
+						</tbody>
+						<tbody class="tbodya" id="maizeadoni_data">
+							<tr>
+								<td>1</td>
+								<td>Dipen</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							
+						</tbody>
+						<tbody class="tbodya" id="maizeguntur_data">
+							<tr>
+								<td>1</td>
+								<td>Srinivas</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>	
+						</tbody>
+
+						<tbody class="tbodya" id="cotton_data">
+							<tr>
+								<td>1</td>
+								<td>Bhagvathi</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Kishore</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Birbhum</td>
+							</tr>	
+						</tbody>
+
+						<tbody class="tbodya" id="cottonguntur_data">
+							<tr>
+								<td>1</td>
+								<td>Bhagvathi</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							
+						</tbody>
+						<tbody class="tbodya" id="cottonbirbhum_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Kishore</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Birbhum</td>
+							</tr>	
+						</tbody>
+						<tbody class="tbodya" id="potato_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Nirav</td>
+								<td>Potato</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>	
+						</tbody>
+						<tbody class="tbodya" id="tomato_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Uday</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>53</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Lakshmi</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>	
+						</tbody>
+						<tbody class="tbodya" id="tomatomedak_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Uday</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>53</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							
+						</tbody>
+						<tbody class="tbodya" id="tomatobhopal_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Lakshmi</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>	
+						</tbody>
+
+						<tbody class="tbodya" id="ambala_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Anand</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Nirav</td>
+								<td>Potato</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Prasad</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>	
+						</tbody>
+
+						<tbody class="tbodya" id="adoni_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Dipen</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Narendra</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+						</tbody>
+
+						<tbody class="tbodya" id="birbhum_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Kishor</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Birbhum</td>
+							</tr>
+					
+						</tbody>
+
+						<tbody class="tbodya" id="bhopal_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Lakshmi</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="guntur_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Bhagvathi</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Srinivas</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="hyderabad_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Ram</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Hyderabad</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="indore_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Srikrishna</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+							
+						</tbody>
+
+						<tbody class="tbodya" id="medak_data">
+							
+							<tr>
+								<td>1</td>
+								<td>Uday</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							
+						</tbody>
+
+					</table>
+					<h2 id="no_data" style="display: none; text-align:center;">No data</h2>
+				</div>
+
+			</div>
+			<div class="col-sm-3 content-3 h-space-padd-r-l">
+				<div class="focus-section">
+					<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+					<div class="home-ind-map">
+						<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+
+
+<script type="text/javascript">
+	$('#backBtn').click(function(){
+		parent.history.back();
+	});
+
+
+	$(document).on('click','#submitbtn',function(){
+		let commodityValue = $("#commodity_list").val();
+		let locationValue = $("#location_list").val();
+		//alert(commodityValue);
+
+		if(commodityValue == 'all' && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').show();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+			
+		}
+
+		if(commodityValue == "Wheat" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').show();
+			$('#wheatindore_data').hide();
+			$('#wheatambala_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Wheat" && locationValue == 'Ambala'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatindore_data').hide();
+			$('#wheatambala_data').show();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Wheat" && locationValue == 'Indore'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').show();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#no_data').hide();
+		}
+
+		// if(commodityValue == "Wheat" && locationValue == 'Hyderabad' || locationValue == 'Adoni' || locationValue == 'Guntur' || locationValue == 'Birbhum' || locationValue == 'Bhopal' || locationValue == 'Medak'){
+		// 	$('#platformtable').show();
+		// 	$('#all_data').hide();
+		// 	$('#wheat_data').hide();
+		// 	$('#wheatambala_data').hide();
+		// 	$('#wheatindore_data').hide();
+		// 	$('#castor_data').hide();
+		// 	$('#castorhyd_data').hide();
+		// 	$('#castoradoni_data').hide();
+		// 	$('#maize_data').hide();
+		// 	$('#maizeguntur_data').hide();
+		// 	$('#maizeadoni_data').hide();
+		// 	$('#cotton_data').hide();
+		// 	$('#cottonguntur_data').hide();
+		// 	$('#cottonbirbhum_data').hide();
+		// 	$('#potato_data').hide();
+		// 	$('#tomato_data').hide();
+		// 	$('#tomatomedak_data').hide();
+		// 	$('#tomatobhopal_data').hide();
+		// 	$('#ambala_data').hide();
+		// 	$('#adoni_data').hide();
+		// }
+
+		if(commodityValue == "Castor" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').show();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Castor" && locationValue == 'Hyderabad'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castoradoni_data').hide();
+			$('#castorhyd_data').show();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+		if(commodityValue == "Castor" && locationValue == 'Adoni'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').show();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		/*if(commodityValue == "Castor" && locationValue == 'Ambala' || locationValue == 'Indore' || locationValue == 'Guntur' || locationValue == 'Birbhum' || locationValue == 'Bhopal' || locationValue == 'Medak'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+		}*/
+
+		if(commodityValue == "Maize" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').show();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Maize" && locationValue == 'Adoni'){
+			//alert('jjj');
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').show();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Maize" && locationValue == 'Guntur'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').show();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+
+		}
+
+
+		if(commodityValue == "Cotton" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').show();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Cotton" && locationValue == 'Guntur'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').show();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+		if(commodityValue == "Cotton" && locationValue == 'Birbhum'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').show();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+		/*if(commodityValue == "Cotton" && locationValue == 'Ambala' || locationValue == 'Indore' || locationValue == 'Hyderabad' || locationValue == 'Adoni' || locationValue == 'Bhopal' || locationValue == 'Medak'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+		}*/
+
+		if(commodityValue == "Potato" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').show();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Potato" && locationValue == 'Ambala'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').show();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Tomato" && locationValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').show();
+			$('#tomatobhopal_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Tomato" && locationValue == 'Medak'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').show();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+		if(commodityValue == "Tomato" && locationValue == 'Bhopal'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').show();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Ambala'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').show();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+		if(commodityValue == "all" && locationValue == 'Adoni'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').show();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Birbhum'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').show();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Bhopal'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').show();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Guntur'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').show();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Hyderabad'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').show();
+			$('#indore_data').hide();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Indore'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').show();
+			$('#medak_data').hide();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "all" && locationValue == 'Medak'){
+			$('#platformtable').show();
+			$('#all_data').hide();
+			$('#wheat_data').hide();
+			$('#wheatambala_data').hide();
+			$('#wheatindore_data').hide();
+			$('#castor_data').hide();
+			$('#castorhyd_data').hide();
+			$('#castoradoni_data').hide();
+			$('#maize_data').hide();
+			$('#maizeguntur_data').hide();
+			$('#maizeadoni_data').hide();
+			$('#cotton_data').hide();
+			$('#cottonguntur_data').hide();
+			$('#cottonbirbhum_data').hide();
+			$('#potato_data').hide();
+			$('#tomato_data').hide();
+			$('#tomatomedak_data').hide();
+			$('#tomatobhopal_data').hide();
+			$('#ambala_data').hide();
+			$('#adoni_data').hide();
+			$('#birbhum_data').hide();
+			$('#bhopal_data').hide();
+			$('#guntur_data').hide();
+			$('#hyderabad_data').hide();
+			$('#indore_data').hide();
+			$('#medak_data').show();
+			$('#no_data').hide();
+		}
+
+		if(commodityValue == "Wheat" && locationValue == "Adoni"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Wheat" && locationValue == "Birbhum"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Wheat" && locationValue == "Bhopal"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Wheat" && locationValue == "Guntur"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Wheat" && locationValue == "Hyderabad"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Wheat" && locationValue == "Medak"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+
+		if(commodityValue == "Castor" && locationValue == "Ambala"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Castor" && locationValue == "Birbhum"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Castor" && locationValue == "Bhopal"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Castor" && locationValue == "Guntur"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Castor" && locationValue == "Indore"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Castor" && locationValue == "Medak"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+
+		if(commodityValue == "Maize" && locationValue == "Ambala"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Maize" && locationValue == "Birbhum"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Maize" && locationValue == "Bhopal"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Maize" && locationValue == "Hyderabad"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Maize" && locationValue == "Indore"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Maize" && locationValue == "Medak"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		
+		}
+
+		if(commodityValue == "Cotton" && locationValue == "Ambala"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Cotton" && locationValue == "Adoni"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Cotton" && locationValue == "Bhopal"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Cotton" && locationValue == "Hyderabad"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Cotton" && locationValue == "Indore"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Cotton" && locationValue == "Medak"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		
+		}
+
+
+		if(commodityValue == "Potato" && locationValue == "Adoni"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Birbhum"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Bhopal"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Guntur"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Hyderabad"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Indore"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Potato" && locationValue == "Medak"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		
+		}
+
+		if(commodityValue == "Tomato" && locationValue == "Adoni"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Tomato" && locationValue == "Ambala"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Tomato" && locationValue == "Birbhum"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Tomato" && locationValue == "Guntur"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Tomato" && locationValue == "Hyderabad"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+		if(commodityValue == "Tomato" && locationValue == "Indore"){
+				$('#platformtable').hide();
+				$('#no_data').show();
+		}
+
+
+
+	})
+
+
+
+
+</script>

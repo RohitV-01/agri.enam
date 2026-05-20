@@ -1,0 +1,298 @@
+<style type="text/css">
+	.nobull {
+	  	list-style-type: none;
+	  	border: 1px solid #d2cfcf;
+	}
+	.test {
+	  	border: 1px solid #d2cfcf;
+	}
+
+	table{
+	    table-layout: fixed;
+	}
+
+	td{
+	    word-wrap: break-word;
+	}
+
+	@page {
+	  	size: landscape;
+	  	margin: 0 !important;
+	}
+	@media print {
+	  	html, body {
+	    	width: 210mm !important;
+	    	height: 297mm !important;
+	  	}
+	}
+
+	#loader { 
+    	display: none;
+	 	position: fixed;
+	  	top: 0;
+	  	left: 0;
+	  	right: 0;
+	  	bottom: 0;
+	  	width: 100%;
+	  	background: rgba(0,0,0,0.75) url(<?php echo base_url();?>assest/images/gif-load.gif) no-repeat center center;
+	  	z-index: 10000;
+	}
+ 	
+</style>
+
+<?php 
+if(isset($param_state) && isset($param_apmc)){ ?>
+  	<input type="hidden" id="state_id_param" value="<?php echo $param_state; ?>">
+  	<input type="hidden" id="apmc_id_param" value="<?php echo $param_apmc; ?>">
+<?php }?>
+
+<section class="title-header-bg-apmc"></section>
+<section class="container-fuild content-section emandi-sec" >
+	<div class="container">
+		<div class="" style="margin-top:10px;margin-left:6px;">
+			<div class="col-md-12 bc-nav" ><a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;<span id="bredcrum1">&nbsp;
+				<a href="<?php echo base_url();?>dashboard"><?php echo $this->lang_file->heading_fetch('dashboard');?></a>&nbsp;<i class="fa fa-angle-right"> </i> <?php echo $this->lang_file->heading_fetch('seed_national_bredcumb');?>
+			</div>
+			<?php date_default_timezone_set("Asia/Kolkata");
+				$date = date("Y-m-d");
+			?>
+			
+			<div class="col-md-12" style="padding:0px;"><h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('national_seed');?></span></h3></div>
+
+			<div class="col-sm-12 well e-trade-detail-box" >
+				<input type="hidden" id="previous_date" value="<?php echo date('Y-m-d', strtotime($date .' -1 day'));?>">
+				<input type="hidden" id="current_date" value="<?php echo $date;?>">
+				<div class="col-md-2 emandi-select e-trade-inputs" style="padding-left:15px;">
+					<b><?php echo $this->lang_file->heading_fetch('min_max_state');?></b>
+					<select class="form-control" id="min_max_state">
+						<option value="">Select State</option>
+					</select>
+				</div>
+				<div class="col-md-2 emandi-select e-trade-inputs">
+					<b>Select District</b>
+					<select class="form-control" id="min_max_district">
+						<option value="0">Select District</option>
+					</select>
+				</div>
+				
+				<div style="padding-right: 0;" class="col-md-2 emandi-select e-trade-refresh-b">
+					<input style="margin-top:21px;" class="btn btn-primary" type="button" value="Search" id="refresh" onclick="getNationalData()">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12" style="margin-top:15px;">
+					<div class="pull-left" style="font-size:15px;" id="mandi_content"><b>
+
+						<p>Data Uploaded at : <span id="upload_date"></span></p>
+						<p style="font-size: 12px;">For more information visit our website <span><a href="https://www.indiaseeds.com" target="_tblank">https://www.indiaseeds.com</a></span></p>
+
+					</div>
+					<div class="pull-right"><input type="button" class="btn btn-success" id="btnExport" value="Download To Pdf" onclick="exportPdf();"/></div>
+				</div>
+				<br>
+				<div class="col-md-12 table-responsive" id="testcheck">	
+				<table class="table table-striped table-bordered" id="seeds_table">
+					<thead>
+						<tr>
+							<th rowspan="2" style="padding-bottom:2%;text-align:center;"><?php echo $this->lang_file->heading_fetch('min_max_state');?></th>
+							<th rowspan="2" style="padding-bottom:2%;text-align:center;">District</th>
+							<th rowspan="2" style="padding-bottom:2%;text-align:center;">Sub-district</th>
+				            <th colspan="6" style="text-align:center;">Dealers Info.</th>
+							<th colspan="6" style="text-align:center;">National Seeds Corporation Limited related Informations</th>
+							<th colspan="3" style="text-align:center;">Product Information</th>
+							
+						</tr>
+		                <tr>
+		                    <th style="padding-bottom:2%;text-align:center;">Name</th>
+							<th style="text-align:center;">Postal Address</th>
+							<th style="padding-bottom:2%;text-align:center;">Pincode</th>
+							<th style="padding-bottom:2%;text-align:center;">Mobile No</th>
+							<th style="text-align:center;">Latitude of Shop</th>
+							<th style="text-align:center;">Longitude of Shop</th>
+
+							<th style="text-align:center;">Area Office Name</th>
+							<th style="text-align:center;">Area Office Postal Address</th>
+							<th style="text-align:center;">Area Office Pin Code</th>
+							<th style="text-align:center;">Area Office In-charge Name</th>
+							<th style="text-align:center;">Area Office In-charge email ID</th>
+							<th style="text-align:center;">Area Office In-charge Mobile No.</th>
+
+							<th style="text-align:center;">Commodity Name</th>
+							<th style="text-align:center;">Hybreed Seeds</th>
+							<th style="text-align:center;">OP Seeds</th>
+		                </tr>
+					</thead>
+					<tbody class="tbodya" id="data_list"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<script type= "text/javascript">
+	var spinner = $('#loader');
+	var baseUrl = $('#base_url').val();
+	$(document).ready(function(){
+		getStateFromNationSeed();
+		getNationalData();
+	});
+
+	$(document).on('change','#min_max_state', function(){
+		let stateName = $( "#min_max_state option:selected" ).text();
+		$.ajax({
+		    type: 'POST',
+		    url: baseUrl+'Enam_ctrl/getDistrictForNationalSeed',
+		    dataType: "json",
+		    data: {stateName:stateName},
+		    beforeSend: function(){
+		    },
+		    complete: function(){},
+			success:function (response) {
+				let x = '<option value="null">Select District</option>';
+				for(let data of response){
+					x+=`<option value=${data.district}>${data.district}</option>`;
+				}
+				$('#min_max_district').html(x);
+			}
+		});
+	});
+
+	// $(document).on("click", "#btnExport", function () {
+         
+ //        spinner.show();
+ //        var element = document.getElementById('seeds_table');
+	// 	var opt = {
+	// 	  	margin:       1,
+	// 	  	filename:     'national_seed_corporation.pdf',
+	// 	  	image:        { type: 'jpeg', quality: 0.98 },
+	// 	  	html2canvas:  { scale: 2 },
+	// 	  	jsPDF:        { unit: 'mm', format: 'a3', orientation: 'landscape' }
+	// 	};
+
+	// 	html2pdf().set(opt).from(element).save();
+
+	// 	setTimeout(()=>{
+	// 		spinner.hide();
+	// 	},3000);
+    
+ //    });
+
+
+	function getNationalData(){
+		let stateName = $( "#min_max_state option:selected" ).text();
+		let distName = $( "#min_max_district option:selected" ).text();
+
+		$.ajax({
+		    type: 'POST',
+		    url: baseUrl+'Enam_ctrl/getNationalSeedDataOnState',
+		    dataType: "json",
+		    data: {stateName:stateName, distName:distName},
+		    beforeSend: function(){
+		    },
+		    complete: function(){},
+			success:function (response) {
+				let tableData = '';
+				//console.log('-----------',response[0].created_at);
+				$('#upload_date').html(response[0].created_at);
+				for(let data of response){
+					tableData+=`<tr>
+									
+									<td>${data.state}</td>
+									<td>${data.district}</td>
+									<td>${data.subDistrict}</td>
+									<td>${data.dealerName}</td>
+									<td>${data.dealerAdd}</td>
+									<td>${data.dealerPincode}</td>
+									<td>${data.dealerMobile}</td>
+									<td>${data.dealerLatitude}</td>
+									<td>${data.dealerLongitude}</td>
+									<td>${data.areaOffName}</td>
+									<td>${data.areaOffAdd}</td>
+									<td>${data.areaOffPincode}</td>
+									<td>${data.areaOffInchargeName}</td>
+									<td>${data.areaOffInchargeEmail}</td>
+									<td>${data.areaOffInchargeMobile}</td>
+									<td style="text-transform: lowercase;font-size: 11px;">
+									  	${getCommaSeprate(data.commodityNames)}
+										
+									</td>
+									<td style="text-transform: lowercase;font-size: 11px;">${getCommaSeprateTest(data.hybridSeeds)}</td>
+									<td style="text-transform: lowercase;font-size: 11px;">${getCommaSeprateTest(data.opSeeds)}</td>
+									
+									
+								</tr>`;
+				}
+
+				$('#seeds_table tbody').html(tableData);
+			}
+		});
+	}
+
+
+	function getCommaSeprate(list){
+		var result = "";
+		var arraylist = list.split(",");
+		for(let data of arraylist){
+			result+= `<li class='nobull'>${data }</li>`;
+		}
+		return result;
+	}
+
+	function getCommaSeprateTest(list){
+		var result = "";
+		var arraylist = list.split(",") ;
+		for(let data of arraylist){
+			result+= `${data == 'No' ? `<li class='nobull' style='color:red;'>${data }</li>` : `<li class='nobull'>${data }</li>`}`;
+		}
+		return result;
+	}
+
+	function getStateFromNationSeed(){
+		$.ajax({
+		    type: 'POST',
+		    url: baseUrl+'Enam_ctrl/getStateForNationalSeed',
+		    dataType: "json",
+		    data: {},
+		    beforeSend: function(){
+		    },
+		    complete: function(){},
+			success:function (response) {
+				let x = '<option value="null">Select State</option>';
+				for(let data of response){
+					x+=`<option value=${data.state}>${data.state}</option>`;
+				}
+				$('#min_max_state').html(x);
+			}
+		});
+	}
+
+
+	function exportPdf(){
+        const el = document.getElementById('testcheck');
+        let divContents = el.innerHTML;
+        var a = window.open('Training Feedback Data','','width=768,height=auto');
+        a.document.write(
+            `<html>
+                <head>
+                    <title>Feedback User Data</title>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+                    <style type="text/css">
+                        table {width: 100%;font: 10px Calibri;};
+                        table, th, td {border: solid 1px #DDD; border-collapse: collapse;
+                            padding: 2px 3px;text-align: center;}
+                        li{list-style-type: none;};
+                    </style>    
+                </head>
+                <body onload="window.print();window.close()">
+                    ${divContents} 
+                </body>
+            </html>`
+        );
+        a.document.close();
+    }
+	
+
+</script>

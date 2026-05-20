@@ -1,0 +1,125 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Dashboard_ctrl extends CI_Controller {
+
+	function __construct(){
+		parent :: __construct();
+		$this->load->helper(array('url','file'));
+		$this->load->database();
+		$this->load->model(array('admin/Language_model','Enam_model'));
+		$this->load->library(array('session','substring','lang_file'));
+		if(!$this->session->userdata('client_language')){
+			$newdata = array(
+					'client_language'  => '1'
+			);
+		}
+		else{
+			$newdata = array(
+					'client_language'  => $this->session->userdata('client_language'),
+			);
+		}
+$this->session->set_userdata($newdata);
+	}
+	
+	function min_max_modal_prices($state_id = null,$apmc = null){
+        $data['param_state'] = $state_id;
+        if($apmc != 'null'){
+            $this->db->select('apmc_id');
+            $result = $this->db->get_where('mandis',array('apmc_name'=>$apmc))->result_array();
+            
+			if(count($result)>0){
+                $apmc = $result[0]['apmc_id'];   
+             }				   
+        }
+        $data['param_apmc'] = $apmc; 
+        $data['page_id'] = 'page_5';
+	    $data['title'] = $this->lang_file->heading_fetch('enam').' | '.$this->lang_file->heading_fetch('head_min_max_model');
+        $data['keywords'] = 'enam home';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/min_max_model/min_max_model',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function agmarknet($state_id = null,$apmc = null){
+        $data['param_state'] = $state_id;
+        if($apmc != 'null'){
+            $this->db->select('apmc_id');
+            $result = $this->db->get_where('mandis',array('apmc_name'=>$apmc))->result_array();
+            
+			if(count($result)>0){
+                $apmc = $result[0]['apmc_id'];   
+             }				   
+        }
+        $data['param_apmc'] = $apmc; 
+        $data['page_id'] = 'page_5';
+	    $data['title'] = $this->lang_file->heading_fetch('enam').' | '.$this->lang_file->heading_fetch('head_min_max_model');
+        $data['keywords'] = 'enam home';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/min_max_model/agmarknet',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+	function rems($state_id = null,$apmc = null){
+        $data['param_state'] = $state_id;
+        if($apmc != 'null'){
+            $this->db->select('apmc_id');
+            $result = $this->db->get_where('mandis',array('apmc_name'=>$apmc))->result_array();
+            
+			if(count($result)>0){
+                $apmc = $result[0]['apmc_id'];   
+             }				   
+        }
+        $data['param_apmc'] = $apmc; 
+        $data['page_id'] = 'page_5';
+	    $data['title'] = $this->lang_file->heading_fetch('enam').' | '.$this->lang_file->heading_fetch('head_min_max_model');
+        $data['keywords'] = 'enam home';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/min_max_model/rems_dashboard',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+function liveprice($state_id = null,$apmc = null){
+        $data['param_state'] = $state_id;
+        if($apmc != 'null'){
+            $this->db->select('apmc_id');
+            $result = $this->db->get_where('mandis',array('apmc_name'=>$apmc))->result_array();
+            
+			if(count($result)>0){
+                $apmc = $result[0]['apmc_id'];   
+             }				   
+        }
+        $data['param_apmc'] = $apmc; 
+        $data['page_id'] = 'page_5';
+	    $data['title'] = $this->lang_file->heading_fetch('enam').' | '.$this->lang_file->heading_fetch('head_min_max_model');
+        $data['keywords'] = 'enam home';
+        $data['head'] = $this->load->view('comman/head',$data,TRUE);
+		$data['languages'] = $this->Language_model->get_all_language();
+		$data['header'] = $this->load->view('comman/header',$data,TRUE);
+		$data['menus'] = $this->Enam_model->all_menus();
+		$data['navigation'] = $this->load->view('comman/navigation',$data,TRUE);
+		$data['marqueeSection'] = $this->load->view('pages/comman/marqueeSection','',TRUE);
+		$data['footer'] = $this->load->view('comman/footer','',TRUE);
+		$data['main_contant'] = $this->load->view('pages/min_max_model/live_price',$data,TRUE);
+		$this->load->view('comman/index',$data);
+	}
+
+}

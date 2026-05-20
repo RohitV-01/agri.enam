@@ -1,0 +1,11 @@
+<IfModule authz_core_module>
+    Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+    Deny from all
+</IfModule>
+
+# HEADERS
+<ifModule mod_headers.c>
+Header set X-Frame-Options "ALLOW-FROM [https://agmarknet.gov.in/agnew/namticker.aspx]"
+</ifModule>

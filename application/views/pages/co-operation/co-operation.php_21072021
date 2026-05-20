@@ -1,0 +1,36 @@
+<section class="">
+		<div class="container-fluid" >
+			<div class="row">
+				<div class="col-md-4" align="center" style="margin-top:10px">
+					<h2 class="text-success" style="font-weight: 800;margin-top: 30px;font-family: Georgia, serif;"><?php echo $this->lang_file->heading_fetch('co-operative_module');?></h2>
+				</div>
+				<div class="col-md-8" style="margin-top:10px;text-align: justify;">
+					<p><b><?php echo $this->lang_file->heading_fetch('co-operative_details');?></b></p>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px">
+				<div class="col-md-6" style="padding-right: 0px;">
+					 <img src="<?php echo base_url();?>/assest/images/cooperation-slider/Cooperative_Process.jpg" alt="Los Angeles" style="width:100%;">
+				</div>
+				<div class="col-md-4">
+				 <img src="<?php echo base_url();?>/assest/images/cooperation-slider/Copperative_Containt.png" alt="Los Angeles" style="width:100%;">	
+				</div>
+				<div class="col-md-2" align="center">
+					<p  style="margin-top:60px"><img width="70px" src="<?php echo base_url();?>/assest/images/fpo-slider/home.png"></p>
+					<p style="margin-top:25px;"><a href="https://enam.gov.in/NAMV2/home/other_register.html" target="_blank" class="btn btn-success" style="color: white;width: 150px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $this->lang_file->heading_fetch('registration');?></a></p>
+					<p><a href="https://enam.gov.in/NAMV2/faces/infrastructure/SLogin.jsf;jsessionid=CUdtBd0f+n6-QB-ZKXAHEYyZ.undefined" class="btn btn-success" target="_blank" style="color: white;width: 150px;"><i class="fa fa-sign-in" aria-hidden="true"></i> <?php echo $this->lang_file->heading_fetch('login');?></a></p>
+					<br>
+					<br>
+				</div>
+			</div>
+				<div class="col-md-12" align="center"  style="margin-top:10px;margin-bottom:10px;">
+				</div>
+			</div>
+</div>
+</section>
+<!-- <script type="text/javascript">
+	$('#fpocaurasal').carousel({
+	  interval: 20000
+	});
+</script>
+ -->

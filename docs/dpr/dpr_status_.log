@@ -1,0 +1,8 @@
+--------------------------------------------------
+Activity Started at : 2025-04-08 12:31:25
+--------------------------------------------------
+2025-04-08 13:59:22 : DPR Report(CSV format) Generated Successfully for the date: , Report : /mnt/reports/dpr_.csv
+Caught: java.lang.ArrayIndexOutOfBoundsException: 3
+java.lang.ArrayIndexOutOfBoundsException: 3
+	at dpr.run(dpr.gy:26)
+2025-04-08 13:59:30 : DPR Report(PDF format) Generation Failed for the date: , Please Check the log -> /mnt/reports/dpr_status_.log

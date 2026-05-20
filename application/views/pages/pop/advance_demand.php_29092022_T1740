@@ -1,0 +1,427 @@
+<?php 
+if(isset($param_state) && isset($param_apmc)){ ?>
+  	<input type="hidden" id="state_id_param" value="<?php echo $param_state; ?>">
+  	<input type="hidden" id="apmc_id_param" value="<?php echo $param_apmc; ?>">
+<?php }?>
+
+<section class="title-header-bg-apmc"></section>
+<section class="container-fuild content-section emandi-sec" >
+	<div class="container">
+		<div class="" style="margin-top:10px;">
+			<div class="col-md-12 bc-nav" >
+				<a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard"><?php echo $this->lang_file->heading_fetch('pop_dashboard');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard/trading-platforms"><?php echo $this->lang_file->heading_fetch('trading_platform');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<?php echo $this->lang_file->heading_fetch('advance_demand');?>
+			</div>
+			<?php date_default_timezone_set("Asia/Kolkata");
+				$date = date("Y-m-d");
+			?>
+
+			<div class="col-sm-9 content-9 h-space-padd-r" >
+				<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('advance_demand');?><p class="t-stake-data"><a id="backBtn"><b><?php echo $this->lang_file->heading_fetch('back');?></b>  <img src="<?php echo base_url(); ?>assest/images/pop/back-arrow.png" style="width: 20px;"></a></p></span></h3>
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding-bottom:20px;">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+							<b><?php echo $this->lang_file->heading_fetch('platform');?></b>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control" name="platform_list" id="platform_list">
+								<option value="all"><?php echo $this->lang_file->heading_fetch('all');?></option>
+								<option value="agribazar">Agri Bazar</option>
+								<option value="bijak">Bijak</option>
+								<option value="kisan_network">Kisan Network</option>
+								<option value="e_tech">E-Tech</option>
+							</select>
+							<div class="text-danger" id="regtype_error" style="display:none;"></div>
+						</div>
+						<button class="btn btn-primary" id="submitbtn"><?php echo $this->lang_file->heading_fetch('pop_submit');?></button>
+					</div>
+
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="padding-bottom:20px;">
+						
+					</div>
+				</div>
+				<br><br>
+				<div class="col-md-12 table-responsive">	
+					<table class="table table-striped table-bordered" id="platformtable" style="display:none;">
+						<thead>
+							<tr>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Sr. No.</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Platform Name</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Commodity</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Expected Demand Date</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Required Quantity</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">UOM</th>
+								<th rowspan="2" style="padding-bottom:2.5%;text-align:center;">Location</th>
+							</tr>
+						</thead>
+
+						<tbody class="tbodya" id="agri_data" style="display:none;">
+							<tr>
+								<td>1</td>
+								<td>Agri Bazar</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Bundi</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Agri Bazar</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Baran</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Agri Bazar</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Kota</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Agri Bazar</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>55</td>
+								<td>Quintal</td>
+								<td>chomu</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Agri Bazar</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Kota</td>
+							</tr>
+						</tbody>
+
+						<tbody class="tbodya" id="bijak_data" style="display:none;">
+							<tr>
+								<td>1</td>
+								<td>Bijak</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Bijak</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Bijak</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Bijak</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>53</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Bijak</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>Bijak</td>
+								<td>Potato</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+						</tbody>
+						<tbody class="tbodya" id="kisan_data" style="display:none;">
+							<tr>
+								<td>1</td>
+								<td>Kisan Network</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>35</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Kisan Network</td>
+								<td>Maize</td>
+								<td>11/08/2021</td>
+								<td>19</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Kisan Network</td>
+								<td>Cotton</td>
+								<td>11/07/2021</td>
+								<td>35</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							
+							
+						</tbody>
+						<tbody class="tbodya" id="etech_data" style="display:none;">
+							<tr>
+								<td>1</td>
+								<td>E-tech</td>
+								<td>Wheat</td>
+								<td>11/09/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							
+							
+						</tbody>
+
+						<tbody class="tbodya" id="all_data" style="display:none;">
+							<tr>
+								<td>1</td>
+								<td>Agri Bazar</td>
+								<td>Wheat</td>
+								<td>11/03/2021</td>
+								<td>38</td>
+								<td>Quintal</td>
+								<td>Bundi</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Agri Bazar</td>
+								<td>Maize</td>
+								<td>11/05/2021</td>
+								<td>52</td>
+								<td>Quintal</td>
+								<td>Baran</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Agri Bazar</td>
+								<td>Cotton</td>
+								<td>11/08/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Kota</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Agri Bazar</td>
+								<td>Tomato</td>
+								<td>11/07/2021</td>
+								<td>55</td>
+								<td>Quintal</td>
+								<td>chomu</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Agri Bazar</td>
+								<td>Castor</td>
+								<td>11/03/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Kota</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>Bijak</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>48</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>Bijak</td>
+								<td>Maize</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>Bijak</td>
+								<td>Cotton</td>
+								<td>11/03/2021</td>
+								<td>30</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>Bijak</td>
+								<td>Tomato</td>
+								<td>11/05/2021</td>
+								<td>53</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>Bijak</td>
+								<td>Castor</td>
+								<td>11/08/2021</td>
+								<td>56</td>
+								<td>Quintal</td>
+								<td>Indore</td>
+							</tr>
+							<tr>
+								<td>11</td>
+								<td>Bijak</td>
+								<td>Potato</td>
+								<td>11/03/2021</td>
+								<td>39</td>
+								<td>Quintal</td>
+								<td>Bhopal</td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td>Kisan Network</td>
+								<td>Wheat</td>
+								<td>11/05/2021</td>
+								<td>35</td>
+								<td>Quintal</td>
+								<td>Adoni</td>
+							</tr>
+							<tr>
+								<td>13</td>
+								<td>Kisan Network</td>
+								<td>Maize</td>
+								<td>11/08/2021</td>
+								<td>19</td>
+								<td>Quintal</td>
+								<td>Guntur</td>
+							</tr>
+							<tr>
+								<td>14</td>
+								<td>Kisan Network</td>
+								<td>Cotton</td>
+								<td>11/07/2021</td>
+								<td>35</td>
+								<td>Quintal</td>
+								<td>Ambala</td>
+							</tr>
+							<tr>
+								<td>15</td>
+								<td>E-tech</td>
+								<td>Wheat</td>
+								<td>11/09/2021</td>
+								<td>26</td>
+								<td>Quintal</td>
+								<td>Medak</td>
+							</tr>
+							
+							
+						</tbody>
+					</table>
+					</table>
+				</div>
+
+			</div>
+			<div class="col-sm-3 content-3 h-space-padd-r-l">
+				<div class="focus-section">
+					<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+					<div class="home-ind-map">
+						<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+
+
+<script type="text/javascript">
+	$('#backBtn').click(function(){
+		parent.history.back();
+	});
+
+
+	$(document).on('click','#submitbtn',function(){
+		let dropdownValue = $("#platform_list").val();
+		//alert(dropdownValue);
+
+		if(dropdownValue == 'agribazar'){
+			$('#platformtable').show();
+			$('#agri_data').show();
+			$('#bijak_data').hide();
+			$('#kisan_data').hide();
+			$('#etech_data').hide();
+			$('#all_data').hide();
+		}
+
+		if(dropdownValue == 'bijak'){
+			$('#platformtable').show();
+			$('#agri_data').hide();
+			$('#bijak_data').show();
+			$('#kisan_data').hide();
+			$('#etech_data').hide();
+			$('#all_data').hide();
+		}
+
+		if(dropdownValue == 'kisan_network'){
+			$('#platformtable').show();
+			$('#kisan_data').show();
+			$('#agri_data').hide();
+			$('#bijak_data').hide();
+			$('#etech_data').hide();
+			$('#all_data').hide();
+		}
+
+		if(dropdownValue == 'e_tech'){
+			$('#platformtable').show();
+			$('#etech_data').show();
+			$('#kisan_data').hide();
+			$('#agri_data').hide();
+			$('#bijak_data').hide();
+			$('#all_data').hide();
+		}
+		if(dropdownValue == 'all'){
+			$('#platformtable').show();
+			$('#all_data').show();
+			$('#etech_data').hide();
+			$('#kisan_data').hide();
+			$('#agri_data').hide();
+			$('#bijak_data').hide();
+		}
+	})
+
+
+
+
+</script>
+

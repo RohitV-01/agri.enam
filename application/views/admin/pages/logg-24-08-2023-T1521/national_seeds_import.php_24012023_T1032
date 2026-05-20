@@ -1,0 +1,259 @@
+<?php $group = $this->session->userdata('group_name'); ?>
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<ol class="breadcrumb">
+		<li>
+			<a title="Home" href="
+				<?php echo base_url();?>admin/admin">
+				<i class="fa fa-dashboard"></i> Home
+			</a>
+		</li>
+		<li class="active">Excel Import</li>
+	</ol>
+	<section class="content-header">
+		<h1 class="pull-left">National Seeds Corporation(NSC)</h1>
+	</section>
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<!-- Left col -->
+			<section class="col-lg-12 connectedSortable">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Import Excel Data of National Seeds Corporation(NSC)</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+					</div>
+					<form name="video_form" id="import_form" role="form" class="form-horizontal" method="POST">
+            			<div class="box-body">
+            				<div class="form-group">
+            					<label class="col-sm-2 control-label">Select Excel File</label>
+            					<div class="col-sm-3">
+            						<input type="file" name="file" id="file" class="form-control" accept=".xls, .xlsx" />
+            						<div class="text-danger" id="from_date_error" style="display:none;"></div>
+            					</div>
+            				</div>
+            			</div>
+                		<div class="box-footer">
+        					<button id="import" type="button" class="btn pull-right btn-info">Upload</button>
+        					<button type="reset" class="btn btn-default pull-right btn-space">Cancel</button>
+                            <a href="<?php echo base_url(); ?>docs/sample_format_for_NSC.xlsx" style="margin-right:10px;" class="btn btn-primary pull-right">Sample Data</a>
+        				</div>	
+					</form>
+					<br />
+					
+				</div>
+			</div>
+		</section>
+	</div>
+
+
+<script type="text/javascript">
+
+    var baseUrl = $('#base_url').val();
+    var newRowFlag = 0, rowCnt = 0, r=0;
+
+    var srno ='';
+    var statename='';
+    var distname='';
+    var subdist='';
+    var dealerName='';
+    var dealerPostadd='';
+    var dealerPin='';
+    var dealerPin='';
+    var dealerMobile='';
+    var dealerLat='';
+    var dealerLongi='';
+    var areaOfficeName='';
+    var areaOfficeAdd='';
+    var areaOfficePin='';
+    var areaOfficeIncha='';
+    var areaOfficeInchaemail='';
+    var areaOfficeInchaMob='';
+    var commName='';
+    var hybreedSeed='';
+    var opSeed='';
+    var prodInfo='';
+
+    var checkArr = [];
+    var pArr = [];
+    var finalArr=[];
+
+    $(document).on('click','#import', function(){
+
+        var path = 'docs/';
+        var file = document.getElementById("file").files.length;
+        var formvalid = true;
+        if(file < 1){
+            $('#file_error').html('Please select excel file.').css('display','block');
+            formvalid = false;
+        }else{
+            $('#file_error').css('display','none'); 
+        }
+
+        var formdata = new FormData();
+        formdata.append('path',path);
+        formdata.append('file',$('#file')[0].files[0]);
+
+        if(formvalid){
+            $.ajax({
+                method:"POST",
+                url:"<?php echo base_url(); ?>admin/File_upload_ctrl/importNSC",
+                dataType:'json',
+                data:formdata,
+                success:function(response){
+                    //console.log('check errors--',response);
+                    if(response.status == 200){
+
+                        //Excel Extraction Process
+                        var arrData = [];
+                        /* set up XMLHttpRequest */
+                        var url = "<?php echo base_url(); ?>docs/"+response.filename;
+                        var oReq = new XMLHttpRequest();
+                        oReq.open("GET", url, true);
+                        oReq.responseType = "arraybuffer";
+                        oReq.onload = function(e) {
+                        var arraybuffer = oReq.response;
+
+                        /* convert data to binary string */
+                        var data = new Uint8Array(arraybuffer);
+                        var arr = new Array();
+                        for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                        var bstr = arr.join("");
+
+                        /* Call XLSX */
+                        var workbook = XLSX.read(bstr, {
+                            type: "binary"
+                        });
+
+                        var first_sheet_name = workbook.SheetNames[0];
+                        /* Get worksheet */
+                        var worksheet = workbook.Sheets[first_sheet_name];
+
+                        var tempArr = XLSX.utils.sheet_to_json(worksheet, {
+                            raw: true
+                        });
+
+                        for(let data of tempArr){
+                            if(r != tempArr.length){
+                                if (data.__EMPTY_2 != null) {
+                                    newRowFlag=1;
+                                }else {
+                                    newRowFlag=0;
+                                }
+
+                                if( newRowFlag==1 ) {
+                                    if(rowCnt != 0 ){
+                                       
+                                    }
+                        
+                                    srno=data['SL No'];
+                                    statename=data['State Name'];
+                                    distname=data['District Name'];
+                                    subdist=data['Sub-district Name'];
+                                    dealerName=data["Dealer's Infromations"];
+                                    dealerPostadd=data.__EMPTY;
+                                    dealerPin=data.__EMPTY_1;
+                                    dealerPin=data.__EMPTY_1;
+                                    dealerMobile=data.__EMPTY_2;
+                                    dealerLat=data.__EMPTY_3;
+                                    dealerLongi=data.__EMPTY_4;
+                                    areaOfficeName=data['National Seeds Corporation Limited related Informations'];
+                                    areaOfficeAdd=data.__EMPTY_5;
+                                    areaOfficePin=data.__EMPTY_6;
+                                    areaOfficeIncha=data.__EMPTY_7;
+                                    areaOfficeInchaemail=data.__EMPTY_8;
+                                    areaOfficeInchaMob=data.__EMPTY_9;
+                                    commName=data.__EMPTY_10;
+                                    hybreedSeed=data.__EMPTY_11;
+                                    opSeed=data.__EMPTY_12;
+                                    prodInfo=data['Product Infromation'];
+
+                                    rowCnt++;
+                        
+                                }else{
+                                    commName += ','+data.__EMPTY_10;
+                                    hybreedSeed += ','+data.__EMPTY_11;
+                                    opSeed += ','+data.__EMPTY_12;
+                                }
+
+                            }
+
+                            var testArr={
+                                'sno':srno,
+                                'state':statename,
+                                'dist':distname,
+                                'subDist':subdist,
+                                'dealerName':dealerName,
+                                'postAdd':dealerPostadd,
+                                'dealPin':dealerPin,
+                                'dealerMob':dealerMobile,
+                                'lat':dealerLat,
+                                'longi':dealerLongi,
+                                'offName':areaOfficeName,
+                                'offadd':areaOfficeAdd,
+                                'offPin':areaOfficePin,
+                                'offIncharge':areaOfficeIncha,
+                                'offEmail':areaOfficeInchaemail,
+                                'inchareMob':areaOfficeInchaMob,
+                                'commname':commName,
+                                'hyseeds':hybreedSeed,
+                                'opseeds':opSeed
+                            }
+
+                            checkArr.push(testArr);
+                            pArr.push(testArr.sno);
+                            
+                            r++;
+                        }
+           
+                        var unique = pArr.filter((v, i, a) => a.indexOf(v) === i);
+           
+                        for(let test of unique){
+                            if(test==undefined){
+
+                            }else{
+                            
+                            const index = checkArr.map(i => i.sno).lastIndexOf(test);
+                            finalArr.push(checkArr[index]);
+                           }
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: baseUrl+'Enam_ctrl/saveArrData',
+                            dataType: "json",
+                            data: {finalArr:finalArr},
+                            beforeSend: function(){
+                            },
+                            complete: function(){},
+                            success:function (response) {
+                                if(response.status == 200){
+                                    alert(response.msg);
+                                    location.reload();
+                                }if(response.status === 500){
+                                    alert(response.msg);
+                                    $("#file").val("");
+
+                                }
+                            }
+                        });
+
+                        }
+                        oReq.send();
+                    }
+                 },
+                 error:function(){
+                    alert("Path not valid.");
+                 },
+                contentType:false,
+                cache:false,
+                processData:false,
+            }); 
+        }
+    });
+   
+</script>

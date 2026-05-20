@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3 class="p-title"><span>DPR</span></h3>
+<!-- Date Range Form and PDF Fetching -->
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <button class="btn btn-secondary mt-4" onclick="window.location.href='https://enam.gov.in/misreports/dashboard'">Back</button>
+    </div>
+</div>
+
+<div class="row sub-nav-menu-img">
+    <div class="col-sm-12">
+        <form class="date-range-form" id="date-range-form">
+            <div class="row">
+                <!-- From Date Input -->
+                <div class="col-sm-4">
+                    <label for="from-date">From Date:</label>
+                    <input class="form-control" id="from-date" name="fromDate" required="" type="date" />
+                </div>
+                <!-- To Date Input -->
+                <div class="col-sm-4">
+                    <label for="to-date">To Date:</label>
+                    <input class="form-control" id="to-date" name="toDate" required="" type="date" />
+                </div>
+                <!-- Search Button -->
+                <div class="col-sm-4 text-center">
+                    <button class="btn btn-primary mt-4" id="search-btn" type="button">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- List of DPRs -->
+<div class="row" id="dpr-list" style="display: none;">
+    <div class="col-sm-12">
+        <h4>List of DPRs</h4>
+        <ul class="list-group" id="dpr-items">
+            <!-- List items will be dynamically populated here -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Function to filter and display DPRs
+    function showDPRs() {
+        const fromDate = document.getElementById('from-date').value;
+        const toDate = document.getElementById('to-date').value;
+
+        // Ensure valid date range
+        if (!fromDate || !toDate) {
+            alert("Please select both From and To dates.");
+            return;
+        }
+
+        const from = new Date(fromDate);
+        const to = new Date(toDate);
+
+        if (from > to) {
+            alert("From Date cannot be after To Date.");
+            return;
+        }
+
+        if ((to - from) > 7 * 24 * 60 * 60 * 1000) { // 7 days in milliseconds
+            alert("Date range cannot exceed 7 days.");
+            return;
+        }
+
+        // Generate DPR links dynamically
+        const dprList = document.getElementById('dpr-items');
+        dprList.innerHTML = ''; // Clear previous results
+
+        let currentDate = new Date(from);
+        while (currentDate <= to) {
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            const pdfLink = `https://enam.gov.in/web/docs/dpr/dpr_${formattedDate}.pdf`;
+
+            const listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            listItem.innerHTML = `<a href="${pdfLink}" target="_blank">DPR for ${formattedDate}</a>`;
+            dprList.appendChild(listItem);
+
+            currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+        }
+
+        // Show the list if there are results
+        document.getElementById('dpr-list').style.display = dprList.children.length > 0 ? 'block' : 'none';
+    }
+
+    // Event listener for search button
+    document.getElementById('search-btn').addEventListener('click', showDPRs);
+
+    // Set minimum and maximum dates for input fields
+    const today = new Date();
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() - 2); // Set to current day - 2
+    const maxDateString = maxDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+    const minDate = "2021-01-01";
+
+    document.getElementById('from-date').setAttribute('min', minDate);
+    document.getElementById('from-date').setAttribute('max', maxDateString);
+
+    document.getElementById('to-date').setAttribute('min', minDate);
+    document.getElementById('to-date').setAttribute('max', maxDateString);
+</script>
+
+</body>
+</html>
+

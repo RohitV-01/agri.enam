@@ -1,0 +1,8 @@
+.commodity-table-list{width:0px;float:left !important;margin:0px 5px;border: 1px solid #ddd;}
+		.container1-t{margin:0 auto;padding:0px;}
+
+		.row1{}
+    	.commodity-table-list table{float:left;width:140px;border:1px solid #ddd;}
+    	.commodity-table-list thead{background-color:#ddd;font-size:12px;}
+    	.commodity-table-list thead tr th{padding:5px 5px;font-size:12px;}
+    	.commodity-table-list tbody tr td{padding:5px 3px;border-bottom:1px solid #ddd;text-align:left;font-size:12px;}

@@ -1,0 +1,393 @@
+<style type="text/css">
+	#loader { 
+    	display: none;
+	 	position: fixed;
+	  	top: 0;
+	  	left: 0;
+	  	right: 0;
+	  	bottom: 0;
+	  	width: 100%;
+	  	background: rgba(0,0,0,0.75) url(<?php echo base_url();?>assest/images/gif-load.gif) no-repeat center center;
+	  	z-index: 10000;
+	}
+</style>
+<?php 
+if(isset($param_state) && isset($param_apmc)){ ?>
+  	<input type="hidden" id="state_id_param" value="<?php echo $param_state; ?>">
+  	<input type="hidden" id="apmc_id_param" value="<?php echo $param_apmc; ?>">
+<?php }?>
+
+<section class="title-header-bg-apmc"></section>
+<section class="container-fuild content-section emandi-sec" >
+	<div class="container">
+		<div class="" style="margin-top:10px;">
+			<div class="col-md-12 bc-nav" >
+				<a href="<?php echo base_url(); ?>" title=""><?php echo $this->lang_file->heading_fetch('home');?></a>&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard"><?php echo $this->lang_file->heading_fetch('pop_dashboard');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<a href="<?php echo base_url(); ?>pop-dashboard/trading-platforms"><?php echo $this->lang_file->heading_fetch('trading_platform');?> </a><i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>&nbsp;
+				<?php echo $this->lang_file->heading_fetch('advance_supply');?>
+			</div>
+			<?php date_default_timezone_set("Asia/Kolkata");
+				$date = date("Y-m-d");
+			?>
+
+			<div class="col-sm-9 content-9 h-space-padd-r">
+				<h3 class="p-title"><span><?php echo $this->lang_file->heading_fetch('advance_supply');?><p class="t-stake-data"><a id="backBtn"><b><?php echo $this->lang_file->heading_fetch('back');?></b>  <img src="<?php echo base_url(); ?>assest/images/pop/back-arrow.png" style="width: 20px;"></a></p></span></h3>
+				<div class="col-sm-12 well e-trade-detail-box" >
+					<div class="col-md-3 emandi-select e-trade-inputs" style="padding-left: 26px;padding-right: 1px;">
+						<b>From Date </b><span style="color:#F00;">*</span>
+						<input type="date" class="form-control" name="fromDate" id="fromDate" value="<?php echo date("Y-m-d")?>" min="<?php echo date("Y-m-d"); ?>">
+					</div>
+					<div class="col-md-2 emandi-select e-trade-inputs" style="padding-left: 31px;padding-right: 0px">
+						<b>To Date </b><span style="color:#F00;">*</span>
+						<input type="date" class="form-control" name="toDate" id="toDate" value="<?php echo date("Y-m-d")?>" min="<?php echo date("Y-m-d"); ?>">
+					</div>
+					<div class="col-md-3 emandi-select e-trade-inputs" style="padding-left: 33px;padding-right: 0px;">
+						<b><?php echo $this->lang_file->heading_fetch('min_max_commodity');?></b>
+						<select class="form-control" id="supply_commo" name="supply_commo">
+							<option value="">Select Commodity</option>
+						</select>
+					</div>
+					<div class="col-md-2 emandi-select e-trade-inputs" style="padding-left: 34px;padding-right: 0px">
+						<b><?php echo $this->lang_file->heading_fetch('min_max_state');?></b>
+						<select class="form-control" id="supply_state" name="supply_state">
+							<option value="">--All--</option>
+						</select>
+					</div>
+					<div class="col-md-2 emandi-select e-trade-inputs" style="padding-left: 34px;padding-right: 0px">
+						<b>District</b>
+						<select class="form-control" id="supply_district" name="supply_district">
+							<option value="">--All--</option>
+						</select>
+					</div>
+					<div class="col-md-3 emandi-select e-trade-inputs1" style="padding-left: 24px;padding-right: 0px;">
+						<b>Village/City</b> 
+						<select class="form-control" id="supply_village" name="supply_village">
+							<option value="">--All--</option>
+						</select>
+					</div>
+					<div style="padding-left: 71px;" class="col-md-2 ">
+						<button class="btn btn-primary" id="searchBtn" style="margin-top:21px;">Search</button>
+					</div>
+					
+				</div>
+				<br><br>
+				<div class="pull-right"><b><?php echo $this->lang_file->heading_fetch('min-max-page');?>:</b> <select class="form-control mandi-pagi" name="min_max_no_of_list" id="min_max_no_of_list"></select></div>
+
+				<div class="col-md-12 table-responsive" id="table_res" style="padding-left: 2px;padding-right: 0px;">	
+					<table class="table table-striped table-bordered" id="advanceSupplyTable">
+						<thead>
+							<tr>
+								<th rowspan="2" style="text-align:center;">Sr. No.</th>
+								<th rowspan="2" style="text-align:center;">Seller Name</th>
+								<th rowspan="2" style="text-align:center;">Expected Supply Date</th>
+								<th rowspan="2" style="text-align:center;">Commodity</th>
+								<th rowspan="2" style="text-align:center;">Quantity</th>
+								<th rowspan="2" style="text-align:center;">Quantity UOM</th>
+							</tr>
+						</thead>
+
+						<tbody class="tbody" id="all_data">
+													
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-3 content-3 h-space-padd-r-l">
+				<div class="focus-section">
+					<div class="sidebar-header-title"><span><?php echo $this->lang_file->heading_fetch('enam_coverage'); ?></span></div>
+					<div class="home-ind-map">
+						<a href="javascript:void(0);"><img src="<?php echo base_url();?>/assest/images/new-theme/map.jpg" usemap="#image-map" class="state_district"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div id="loader"></div>
+
+<?php 
+	$c = 1;
+	$url_array ='';
+	while($this->uri->segment($c) != ''){
+		$url_array.= $this->uri->segment($c).'/';
+		$c = $c + 1;
+	}
+	$url_array = strtolower(rtrim($url_array,"/ ")); 
+?>
+
+
+<script type="text/javascript">
+
+	var baseUrl = $('#base_url').val();
+	var start = 0;
+	var limit = 10;
+	var data_array = [];
+
+	$.ajax({
+		type: 'post',
+		url: baseUrl+'Ajax_ctrl/menu_activate/<?php echo $url_array;?>',
+		dataType: "json",
+		data:{},
+		beforeSend: function(){},
+		complete: function(){},
+		success: function (response){
+			if(response.status == 200){
+				console.log(response);
+				if (typeof response.data[0].id !== 'undefined') {
+					$('#menuid_'+response.data[0].id).addClass('active');	
+				}
+				if (typeof response.data[0].p_id !== 'undefined') {
+					$('#menuid_'+response.data[0].p_id).addClass('active');
+				}
+			    $('#bredcrum').html(response.bredcrum);	
+			}
+	        else{
+				$('#bredcrum').html(response.bredcrum);	
+			}
+		}
+	});
+
+
+	$(document).ready(function() { 
+		var spinner = $('#loader');
+		let startDate = document.getElementById('fromDate').value;
+		let endDate = document.getElementById('toDate').value;		
+		getCommodity(startDate,endDate);
+
+		$('#backBtn').click(function(){
+			parent.history.back();
+		});
+
+		$('#searchBtn').click(function(e){
+			e.preventDefault();
+			spinner.show();
+			let startDate = document.getElementById('fromDate').value;
+			let endDate = document.getElementById('toDate').value;
+			let supplyCommodity = document.getElementById('supply_commo').value;
+			let supplyState = $("#supply_state option:selected" ).text();
+			let supplyDistrict =$("#supply_district option:selected" ).text();
+			let supplyVillage = $("#supply_village option:selected" ).text();
+
+			let comm = supplyCommodity === 'Select Commodity' ? '' : supplyCommodity;
+			let sName = supplyState === '--All--' ? '' : supplyState;
+			let dName = supplyDistrict === '--All--' ? '' : supplyDistrict;
+			let vName = supplyVillage === '--All--' ? '' : supplyVillage;
+
+			var settings = {
+			  	"url": "https://enam.gov.in/pop/rest/get_advance_supply_loc",
+			  	"method": "POST",
+			  	"timeout": 0,
+			  	"headers": {
+			    	"Content-Type": "application/json",
+			    	"Cookie": "JSESSIONID=E1F08D7BCE91B10332368E1ACC4B5016; SERVERID=node20"
+			  	},
+			  	"data": JSON.stringify({
+			    	"fromDate": `${startDate}`,
+			    	"toDate": `${endDate}`,
+			    	"commodityid": `${comm}`,
+			    	"state": `${sName}`,
+			    	"district": `${dName}`,
+			    	"village": `${vName}`
+			  	}),
+			};
+
+			$.ajax(settings).done(function (response) {
+				let resData = response;
+				let i=1, tableData = '';
+				if(resData.data.length > 0){
+					spinner.hide();
+					data_array = [];
+		    		$.each(resData.data,function(key,value){
+		    			data_array.push(value);
+		    		});
+		    		var array_length = data_array.length;
+		    		var pages = parseInt(parseInt(array_length)/parseInt(limit));
+		    		var y = '';
+		    		for(var p = 0;p<= pages; p++){
+		         		y = y + '<option value="'+ p +'">'+ parseInt(parseInt(p)+1) +'</option>';
+		    		}
+		    		$('#min_max_no_of_list').html(y);
+		    		pagination(start);
+				}
+				else{
+					spinner.hide();
+					$('#advanceSupplyTable tbody').html('<tr><td colspan="11" style="text-align:center;">No record Found.</td></tr>');
+				}
+			});
+		});
+
+
+		$('#supply_commo').change(function(){
+			spinner.show();
+			let startDate = document.getElementById('fromDate').value;
+			let endDate = document.getElementById('toDate').value;
+			let commoId = $(this).val();
+
+			$.ajax({
+				url :  '<?php echo base_url();?>/Enam_ctrl/getAdvanceSupplyState',
+				type : 'POST',
+				data : {
+					startDate:startDate,
+					endDate : endDate,
+					commoId:commoId
+				},
+				dataType : 'json',
+				success : function (response){
+					if(response.status == "Success"){
+						if(response.data.length > 0){
+							spinner.hide();
+							if(response.data.length > 0){
+								spinner.hide();
+								let x = '<option value="">--All--</option>';
+								for(let data of response.data){
+									x+=`<option value=${data.state}>${data.state}</option>`
+								}
+								$('#supply_state').html(x)
+							}
+						}else{
+							spinner.hide();	
+						}
+					}
+				}
+			});
+		});
+
+		$('#supply_state').change(function(){
+			spinner.show();
+			let startDate = document.getElementById('fromDate').value;
+			let endDate = document.getElementById('toDate').value;
+			let commoId = document.getElementById('supply_commo').value;
+			let supplyState = $("#supply_state option:selected" ).text();
+
+			$.ajax({
+				url :  '<?php echo base_url();?>/Enam_ctrl/getAdvanceSupplyDistrict',
+				type : 'POST',
+				data : {
+					startDate:startDate,
+					endDate : endDate,
+					commoId:commoId,
+					supplyState:supplyState,
+				},
+				dataType : 'json',
+				success : function (response){
+					if(response.status == "Success"){
+						if(response.data.length > 0){
+							spinner.hide();
+							let x = '<option value="">--All--</option>';
+							for(let data of response.data){
+								x+=`<option value=${data.district}>${data.district}</option>`
+							}
+							$('#supply_district').html(x)
+						}else{
+							spinner.hide();
+						}
+					}
+				}
+			});
+		});
+
+		$('#supply_district').change(function(){
+			spinner.show();
+			let startDate = document.getElementById('fromDate').value;
+			let endDate = document.getElementById('toDate').value;
+			let commoId = document.getElementById('supply_commo').value;
+			let supplyState = $("#supply_state option:selected" ).text();;
+			let supplyDistrict = $("#supply_district option:selected" ).text();;
+			$.ajax({
+				url :  '<?php echo base_url();?>/Enam_ctrl/getAdvanceSupplyVillage',
+				type : 'POST',
+				data : {
+					startDate:startDate,
+					endDate : endDate,
+					commoId:commoId,
+					supplyState:supplyState,
+					supplyDistrict:supplyDistrict
+				},
+				dataType : 'json',
+				success : function (response){
+					if(response.status == "Success"){
+						if(response.data.length > 0){
+							spinner.hide();
+							let x = '<option value="">--All--</option>';
+							for(let data of response.data){
+								x+=`<option value=${data.village}>${data.village}</option>`
+							}
+							$('#supply_village').html(x)
+						}else{
+							spinner.hide();
+						}
+					}
+				}
+			});
+		});
+
+		$(document).on('change','#fromDate,#toDate',function(){
+			let startDate = document.getElementById('fromDate').value;
+			let endDate = document.getElementById('toDate').value;
+			getCommodity(startDate,endDate);
+		});
+
+		$(document).on('change','#min_max_no_of_list',function(){
+			var value = $(this).val();
+			pagination(value);
+		});
+	})	
+
+	function getCommodity(startDate, endDate){
+		$.ajax({
+			url :  '<?php echo base_url();?>/Enam_ctrl/getCommodity',
+			type : 'POST',
+			data : {
+				startDate:startDate,
+				endDate:endDate
+			},
+			dataType : 'json',
+			success : function (response){
+				if(response.status == "Success"){
+					let x = '<option value="">Select Commodity</option>';
+					for(let data of response.data){
+						x+=`<option value=${data.commodityid}>${data.commodity}</option>`
+					}
+					$('#supply_commo').html(x)
+				}else{
+					
+				}
+			}
+		});
+	}
+
+
+	function pagination(start){
+		var array_length = data_array.length;
+		if(start != 0){
+			slug = 1;
+		}
+		else{
+			slug = 0;
+		}
+		var x = '';
+		var k=1;
+		for(var i = parseInt(parseInt(start*limit)+slug); i <= (parseInt(parseInt(parseInt(start)*10))+10); i++){
+			
+			if(i < array_length){
+				x = x + '<tr>'+
+						'<td align="center" style="text-align:center;">'+ k++ +'</td>'+
+						'<td align="center" style="text-align:center;">'+ data_array[i].sellername +'</td>'+
+						'<td align="center" style="text-align:center;">'+ data_array[i].expectedsupplydate.substring(0, data_array[i].expectedsupplydate.indexOf(' ')) +'</td>'+
+						'<td align="center" style="text-align:center;">'+ (data_array[i].commodity) +'</td>'+
+						'<td align="center" style="text-align:center;">'+ (data_array[i].qty) +'</td>'+
+						'<td align="center" style="text-align:center;">'+ (data_array[i].qtyuom) +'</td>';
+					x = x + '</tr>';  
+			}
+			else{
+	    		break;
+			}
+		} 
+		$('#advanceSupplyTable tbody').html(x);
+	}
+
+
+
+</script>
