@@ -87,9 +87,7 @@ class Logg_ctrl extends CI_Controller{
         $data['query'] = $this->db->get_where('logg lg', array('lg.status'=>1))->result_array();
         
         
-        //$this->load->library('PHPReport');
-        $this->load->library("PHPExcel");
-        $phpExcel = new PHPExcel();
+        $phpExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $prestasi = $phpExcel->setActiveSheetIndex(0);
         
         $prestasi->setCellValue('A1', 'S. No.');
@@ -109,7 +107,7 @@ class Logg_ctrl extends CI_Controller{
             $prestasi->setCellValue('D'.$rowexcel, $row["created_at"]);
         }
 
-        $objWriter = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
+        $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($phpExcel, 'Xlsx');
        
         if(!is_dir('./logg_backup')){
             mkdir('./logg_backup');

@@ -116,7 +116,7 @@
 				  $ch = curl_init($url);
 				  # Setup request to send json via POST.
 				  $payload = json_encode(array( "Records"=> $data ));
-				  $payload = json_encode("Records"=> $data);
+
 				  /*$payload = md5($data);*/
 
 				  echo "<br>";

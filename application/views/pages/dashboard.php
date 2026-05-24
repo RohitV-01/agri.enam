@@ -42,7 +42,7 @@
 				</div>
 				<div class="about-sec col-lg-5 col-sm-5 wow fadeInUp" data-wow-delay="0.5s">
 					<div class="sidebar-header-title"><span class="e-text"><?php echo $this->lang_file->heading_fetch('enam_overview'); ?></span></div>
-					<?php print_r($home_body[0]['content']); ?>
+					<?php echo isset($home_body[0]['content']) ? $home_body[0]['content'] : ''; ?>
 				</div>
 				
 				<div style="display:none;" class="col-lg-3 col-sm-3 wow fadeInUp events-box" data-wow-delay="0.5s" >

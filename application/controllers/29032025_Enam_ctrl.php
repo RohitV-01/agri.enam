@@ -397,7 +397,6 @@ function stakeholderdata(){
 		order by c.g_id,ci.commodity_name")->result_array();
 		
 		$data['page_id'] = '800';
-		require_once(APPPATH.'third_party/Dompdf/autoload.inc.php');
 	    $pdf = new Dompdf\Dompdf();
 	    $html = $this->load->view('pages/pdf/commodity_pfd',$data,TRUE);
 	    $pdf->loadHtml($html);
@@ -439,7 +438,6 @@ function stakeholderdata(){
 	    //$this->load->view('pages/pdf/commodity_parameter_pfd',$data);
 // 	    
 	    $data['page_id'] = '800';
-	    require_once(APPPATH.'third_party/Dompdf/autoload.inc.php');
 	    $pdf = new Dompdf\Dompdf();
 	    $html = $this->load->view('pages/pdf/commodity_parameter_pfd',$data,TRUE);
 	    $pdf->loadHtml($html);

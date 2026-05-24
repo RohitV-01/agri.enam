@@ -8,13 +8,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$l_id = (int)$CI->session->userdata('client_language');
 			
 			$result = $CI->db->query("SELECT * from heading_item WHERE heading_id = (select id from heading WHERE heading = '$string') and language_id in (1,".$l_id.") AND status = 1")->result_array();
-			
-			if(count($result) > 1){
-			    return $result[1]['heading_item'];
+
+			if (empty($result)) {
+			    return '';
 			}
-			else{
-			    return $result[0]['heading_item'];
+			if (count($result) > 1) {
+			    return $result[1]['heading_item'] ?? $result[0]['heading_item'] ?? '';
 			}
+			return $result[0]['heading_item'] ?? '';
 			
 		}
 function logg_report($log_data){
