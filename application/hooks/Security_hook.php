@@ -7,7 +7,7 @@ class Security_hook {
      * Gate all admin panel access.
      *
      * Two layers of protection, applied in order:
-     *  1. Flag gate   — panel returns 404 unless ADMIN_PANEL_ENABLED=true
+     *  1. Flag gate   — panel returns 404 unless admin_panel_enabled = TRUE
      *  2. IP allowlist — if admin_allowed_ips is non-empty, only listed
      *                    addresses can reach the panel after the flag is on.
      *
@@ -24,8 +24,8 @@ class Security_hook {
         }
 
         // --- Layer 1: Flag-based access gate ---
-        // The panel is completely hidden (404) unless ADMIN_PANEL_ENABLED=true
-        // is set as an environment variable.
+        // The panel is completely hidden (404) unless admin_panel_enabled = TRUE
+        // in application/config/config.php
         if ( ! $CI->config->item('admin_panel_enabled')) {
             show_404('', FALSE);
             exit;
