@@ -545,13 +545,10 @@ $config['proxy_ips'] = '';
 |--------------------------------------------------------------------------
 |
 | Controls whether the admin panel (/admin/*) is accessible at all.
-<<<<<<< Updated upstream
 | When FALSE (default), all admin routes return 404 — the panel is
 | completely hidden. Enable only when administrative access is needed.
 |
-| How to enable:
-|   Option 1 (environment variable): export ADMIN_PANEL_ENABLED=true
-|   Option 2 (local dev): set the value directly to TRUE below
+| To re-enable: change FALSE to TRUE below.
 |
 */
 $config['admin_panel_enabled'] = FALSE; // Login page disabled. Change to TRUE to re-enable.
@@ -570,19 +567,3 @@ $config['admin_panel_enabled'] = FALSE; // Login page disabled. Change to TRUE t
 |
 */
 $config['admin_allowed_ips'] = array();
-=======
-| Set to FALSE to make the entire admin panel return 404 (default for
-| production). Enable only when administrative access is needed.
-|
-| How to enable:
-|   Option 1 (environment variable): export ADMIN_PANEL_ENABLED=true
-|   Option 2 (direct edit for local dev): change FALSE to TRUE below
-|
-| Allowed IPs (optional): Restrict admin access to specific IP addresses.
-| Leave as empty array to skip IP restriction when panel is enabled.
-|   e.g. array('203.0.113.10', '10.0.0.0/8')
-|
-*/
-$config['admin_panel_enabled'] = getenv('ADMIN_PANEL_ENABLED') === 'true';
-$config['admin_allowed_ips']   = array();
->>>>>>> Stashed changes
