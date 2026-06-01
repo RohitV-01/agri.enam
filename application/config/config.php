@@ -553,7 +553,7 @@ $config['proxy_ips'] = '';
 |   Option 2 (local dev): set the value directly to TRUE below
 |
 */
-$config['admin_panel_enabled'] = getenv('ADMIN_PANEL_ENABLED') === 'true';
+$config['admin_panel_enabled'] = FALSE; // Login page disabled. Change to TRUE to re-enable.
 
 /*
 |--------------------------------------------------------------------------

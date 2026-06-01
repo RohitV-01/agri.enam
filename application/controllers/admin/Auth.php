@@ -24,16 +24,13 @@ class Auth extends CI_Controller
 	 * Redirect if needed, otherwise display the user list
 	 */
 	public function index() {
-// 		$this->form_validation->set_rules('password', 'password', 'required|min_length[3]');
-// 		$this->form_validation->set_rules('identity', 'Identity', 'required');
-		
-// 		if ($this->form_validation->run() == FALSE){
-// 			//$this->load->view('admin/pages/login');
-// 		}
-// 		else {
-// 			$this->load->view('admin/common/pages/formsuccess');
-// 		}
-		
+		// Login page is disabled. Returns 404 to prevent exposure.
+		// To re-enable: set $config['admin_panel_enabled'] = TRUE in config.php
+		if ( ! $this->config->item('admin_panel_enabled')) {
+			show_404('', FALSE);
+			return;
+		}
+
 		if (!$this->ion_auth->logged_in()){	
 			$data['title'] = 'eNam Admin';
 			$data['head'] = $this->load->view('admin/comman/head','',TRUE);
