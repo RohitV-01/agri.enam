@@ -117,7 +117,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -420,8 +420,8 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_secure']	= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
+$config['cookie_httponly'] 	= TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -538,3 +538,18 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/*
+|--------------------------------------------------------------------------
+| Admin Panel IP Whitelisting
+|--------------------------------------------------------------------------
+|
+| List of IP addresses allowed to access the admin panel.
+| If this array is empty, IP whitelisting is effectively disabled.
+| Add your production server/office IPs here.
+|
+| Example:
+|   $config['admin_allowed_ips'] = array('203.0.113.10', '198.51.100.25');
+|
+*/
+$config['admin_allowed_ips'] = array();

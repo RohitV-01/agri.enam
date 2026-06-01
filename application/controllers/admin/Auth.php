@@ -85,7 +85,9 @@ class Auth extends CI_Controller
 
 		//$identity = 'ben.edmunds@gmail.com';
 		if ($this->ion_auth->is_max_login_attempts_exceeded($this->input->post('identity'))){
-				$this->session->set_flashdata('message', 'You have too many login attempts');
+				$this->session->set_flashdata('message', 'Too many failed login attempts. Please try again later.');
+				redirect('admin/Auth/login', 'refresh');
+				return;
 		}
 		
 		if ($this->form_validation->run() === TRUE)

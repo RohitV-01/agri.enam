@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$hook['post_controller_constructor'][] = array( 
-'class' => 'Test_hook', 
-'function' => 'hooks_fun',
-'filename' => 'Test_hook.php',
-'filepath' => 'hooks' 
-//'params' => array('beer', 'wine', 'snacks') 
-);
+
+// NOTE: Test_hook (visitor counter) disabled — it crashes the site if the
+// visitor_count table is missing, and has a SQL injection vulnerability.
+// $hook['post_controller_constructor'][] = array( 
+// 'class' => 'Test_hook', 
+// 'function' => 'hooks_fun',
+// 'filename' => 'Test_hook.php',
+// 'filepath' => 'hooks' 
+// );
 
 $hook['post_controller_constructor'][] = array(
 'class' => 'Security_hook',
@@ -14,4 +16,3 @@ $hook['post_controller_constructor'][] = array(
 'filename' => 'Security_hook.php',
 'filepath' => 'hooks'
 );
-
