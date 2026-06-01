@@ -37,7 +37,7 @@
 <script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js" integrity="sha256-UnTx9ZAnD7Sme94jD2ZnrR4P3Lgn5i8GsnZ1t6V3x00=" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assest/js/wow.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/js/theme.js" ></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/js/client.js"></script>
 

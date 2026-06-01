@@ -541,11 +541,27 @@ $config['proxy_ips'] = '';
 
 /*
 |--------------------------------------------------------------------------
+| Admin Panel Access Flag
+|--------------------------------------------------------------------------
+|
+| Controls whether the admin panel (/admin/*) is accessible at all.
+| When FALSE (default), all admin routes return 404 — the panel is
+| completely hidden. Enable only when administrative access is needed.
+|
+| How to enable:
+|   Option 1 (environment variable): export ADMIN_PANEL_ENABLED=true
+|   Option 2 (local dev): set the value directly to TRUE below
+|
+*/
+$config['admin_panel_enabled'] = getenv('ADMIN_PANEL_ENABLED') === 'true';
+
+/*
+|--------------------------------------------------------------------------
 | Admin Panel IP Whitelisting
 |--------------------------------------------------------------------------
 |
-| List of IP addresses allowed to access the admin panel.
-| If this array is empty, IP whitelisting is effectively disabled.
+| Optional second layer. If non-empty, only listed IPs can reach the
+| admin panel even after the flag above is enabled.
 | Add your production server/office IPs here.
 |
 | Example:
