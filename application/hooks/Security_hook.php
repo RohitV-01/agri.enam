@@ -4,48 +4,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Security_hook {
 
     /**
-     * Gate all admin panel access.
+     * Gate all admin panel access — fires at pre_controller stage.
+     *
+     * Running pre_controller means this check happens BEFORE the admin
+     * controller is instantiated, so a 500 from the constructor cannot
+     * bypass the gate.
      *
      * Two layers of protection, applied in order:
-     *  1. Flag gate   — panel returns 404 unless admin_panel_enabled = TRUE
+     *  1. Flag gate   — all /admin/* requests return 404 unless
+     *                   admin_panel_enabled = TRUE in config.php
      *  2. IP allowlist — if admin_allowed_ips is non-empty, only listed
      *                    addresses can reach the panel after the flag is on.
-     *
-     * Runs as a post_controller_constructor hook.
      */
     public function check_admin_ip()
     {
-        $CI =& get_instance();
+        // At pre_controller stage the CI super-object is not yet available.
+        // Check the URI directly from the server request.
+        $uri = isset($_SERVER['REQUEST_URI']) ? strtolower($_SERVER['REQUEST_URI']) : '';
 
-        // Only applies to admin/* routes
-        $directory = (string) $CI->router->fetch_directory();
-        if (strtolower(trim($directory)) !== 'admin/') {
+        // Only gate /admin/* paths
+        if (strpos($uri, '/admin/') === FALSE && substr($uri, -6) !== '/admin') {
             return;
         }
 
+        // Load CI config manually (the config file has already been loaded
+        // by CI core at this stage, so we read it from the CI Config class).
+        $CI_config = & load_class('Config', 'core');
+
         // --- Layer 1: Flag-based access gate ---
-        // The panel is completely hidden (404) unless admin_panel_enabled = TRUE
-        // in application/config/config.php
-        if ( ! $CI->config->item('admin_panel_enabled')) {
-            show_404('', FALSE);
+        if ( ! $CI_config->item('admin_panel_enabled')) {
+            header('HTTP/1.1 404 Not Found');
+            header('Content-Type: text/html; charset=UTF-8');
+            echo '<!DOCTYPE html><html><head><title>404 Not Found</title></head>'
+               . '<body><h1>404 Not Found</h1><p>The page you requested was not found.</p></body></html>';
             exit;
         }
 
         // --- Layer 2: IP allowlist (optional) ---
-        // If admin_allowed_ips is a non-empty array, only listed addresses
-        // can reach the panel even after the flag is enabled.
-        $allowed_ips = $CI->config->item('admin_allowed_ips');
+        $allowed_ips = $CI_config->item('admin_allowed_ips');
         if (is_array($allowed_ips) && ! empty($allowed_ips)) {
-            $client_ip = $CI->input->ip_address();
+            $client_ip = isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                ? trim(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0])
+                : (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+
             if ( ! in_array($client_ip, $allowed_ips)) {
-                log_message('error', 'Admin access DENIED for IP: ' . $client_ip
-                    . ' | URI: ' . $CI->uri->uri_string());
-                show_error(
-                    'Access Denied: Your IP address (' . htmlspecialchars($client_ip)
-                    . ') is not authorised to access this panel.',
-                    403,
-                    'Forbidden'
-                );
+                header('HTTP/1.1 403 Forbidden');
+                header('Content-Type: text/html; charset=UTF-8');
+                echo '<!DOCTYPE html><html><head><title>403 Forbidden</title></head>'
+                   . '<body><h1>403 Forbidden</h1><p>Your IP address is not authorised to access this panel.</p></body></html>';
                 exit;
             }
         }

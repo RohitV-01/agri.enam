@@ -10,8 +10,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // 'filepath' => 'hooks' 
 // );
 
-$hook['post_controller_constructor'][] = array(
-'class' => 'Security_hook',
+// pre_controller fires BEFORE the admin controller is instantiated,
+// so a 500 from the controller constructor cannot bypass this gate.
+$hook['pre_controller'][] = array(
+'class'    => 'Security_hook',
 'function' => 'check_admin_ip',
 'filename' => 'Security_hook.php',
 'filepath' => 'hooks'
