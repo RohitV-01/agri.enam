@@ -37,7 +37,7 @@ $date = date("Y-m-d");
 </select>
 </div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
 <!-- <div class="col-md-2 emandi-select e-trade-inputs1"><b><?php echo $this->lang_file->heading_fetch('min_max_from_date');?></b> <input class="form-control" type="date" id="min_max_apmc_from_date" min="<?php echo date('Y-m-d', strtotime($date .' -180 day'));?>" max="<?php echo date('Y-m-d', strtotime($date .' -1 day'));?>"/></div>
 
 <div class="col-md-2 emandi-select e-trade-inputs1"><b><?php echo $this->lang_file->heading_fetch('min_max_to_date');?></b> <input class="form-control" type="date" id="min_max_apmc_to_date" min="<?php echo date('Y-m-d', strtotime($date .' -7 day'));?>" max="<?php echo $date;?>"/></div> -->

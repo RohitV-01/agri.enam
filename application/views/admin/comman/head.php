@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/admin/css/admin-custom-style.css"/>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js" integrity="sha256-UnTx9ZAnD7Sme94jD2ZnrR4P3Lgn5i8GsnZ1t6V3x00=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js" ></script>
+<script src="https://code.jquery.com/jquery-migrate-3.5.0.min.js" integrity="sha256-c67bz44GJF/Bwk1lxEJlI90wVQZIp4FHNQ0oBNOsYYs=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.ckeditor.com/4.25.1/standard/ckeditor.js" ></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/ckeditor/sample.js" ></script>
 </head>
