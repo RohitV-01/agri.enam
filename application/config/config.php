@@ -25,22 +25,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$config['base_url'] = 'http://www.sankalpekprayas.org/jan/';
 
-// Auto-detect base_url for both local dev and production
-// Detects protocol (http/https), host, and subdirectory automatically
-$_base_protocol = 'http';
-if (
-    (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) === 'on' || $_SERVER['HTTPS'] == 1)) ||
-    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') ||
-    (isset($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) === 'on') ||
-    (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) === 'on') ||
-    (isset($_SERVER['HTTP_X_URL_SCHEME']) && strtolower($_SERVER['HTTP_X_URL_SCHEME']) === 'https') ||
-    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
-) {
-    $_base_protocol = 'https';
-}
-$_base_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-$_base_path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-$config['base_url'] = $_base_protocol . '://' . $_base_host . $_base_path . '/';
+/* $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ?  "https" : "http")."://".$_SERVER['HTTP_HOST'].str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);*/
+// Production URL — uncomment for deployment
+//$config['base_url'] = 'https://agri.enam.gov.in/';
+// Local dev
+$config['base_url'] = 'http://localhost:8080/';
 $config['offset'] = 5;
 
 $config['nam_url'] = $config['base_url'].'nam';
@@ -562,7 +551,7 @@ $config['proxy_ips'] = '';
 | To re-enable: change FALSE to TRUE below.
 |
 */
-$config['admin_panel_enabled'] = FALSE; // Admin panel disabled. Change to TRUE to re-enable.
+$config['admin_panel_enabled'] = FALSE; // Login page disabled. Change to TRUE to re-enable.
 
 /*
 |--------------------------------------------------------------------------

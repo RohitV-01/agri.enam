@@ -73,12 +73,7 @@ class Auth extends CI_Controller
 	 */
 	public function login()
 	{
-		// Admin panel disabled — return 404 to prevent exposure.
-		if ( ! $this->config->item('admin_panel_enabled')) {
-			show_404('', FALSE);
-			return;
-		}
-
+		
 		$this->data['title'] = $this->lang->line('login_heading');
 
 		// validate form input
