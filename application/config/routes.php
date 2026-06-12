@@ -99,6 +99,6 @@ $route['weather_forecast'] = 'Enam_ctrl/weather_forecast';
 //$route['admin/admin/trade_data'] = 'admin/Admin_ctrl/trade_data';
 //$route['admin/admin/(:any)'] = 'admin/Admin_ctrl/$1';
 //$route['admin/admin/edit_page'] = 'admin/Admin_ctrl/$1';
-$route['admin/admin/home_page'] = 'admin/Admin_ctrl/$1';
+//$route['admin/admin/home_page'] = 'admin/Admin_ctrl/$1';
 $route['login'] = 'Enam_ctrl/login_redirect';
 $route['registration'] = 'Enam_ctrl/registration_redirect';
