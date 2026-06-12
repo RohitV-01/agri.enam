@@ -20,10 +20,11 @@ class Security_hook {
     {
         // At pre_controller stage the CI super-object is not yet available.
         // Check the URI directly from the server request.
-        $uri = isset($_SERVER['REQUEST_URI']) ? strtolower($_SERVER['REQUEST_URI']) : '';
+        $path = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '';
+        $path = strtolower($path);
 
-        // Only gate /admin/* paths
-        if (strpos($uri, '/admin/') === FALSE && substr($uri, -6) !== '/admin') {
+        // Only gate /admin/* paths (handles index.php/admin, /admin/, and exact /admin)
+        if (strpos($path, '/admin/') === FALSE && $path !== '/admin' && substr($path, -6) !== '/admin') {
             return;
         }
 
