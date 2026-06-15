@@ -10,7 +10,7 @@
 	?>	
 </title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/admin/bootstrap/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/admin/dist/css/AdminLTE.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/admin/dist/css/skins/_all-skins.min.css" />
@@ -18,8 +18,8 @@
 <!--<link rel="stylesheet" type="text/css" href="<?php //echo base_url(); ?>assest/admin/css/sb-admin.css"/>-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assest/admin/css/admin-custom-style.css"/>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-migrate-3.5.0.min.js" integrity="sha256-c67bz44GJF/Bwk1lxEJlI90wVQZIp4FHNQ0oBNOsYYs=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdn.ckeditor.com/4.25.1/standard/ckeditor.js" ></script>
+<script src="<?php echo base_url(); ?>assest/js/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assest/admin/js/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/ckeditor/ckeditor.js" ></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/ckeditor/sample.js" ></script>
 </head>

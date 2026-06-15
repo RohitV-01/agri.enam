@@ -28,10 +28,10 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="<?php echo base_url(); ?>assest/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
-<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js" integrity="sha256-9bROCFEIHDqBdrFsGCcBiEnmjRB0P0n7lbJm1WYGPZQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMkRKVRS+NtAltW7qnPCbb78bByA==" crossorigin="anonymous"></script>
+<script src="<?php echo base_url(); ?>assest/admin/js/jquery-ui.min.js"></script>
+<script src="<?php echo base_url(); ?>assest/admin/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/js/custom.js" ></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/js/vivek.js" ></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assest/admin/js/pagination.js" ></script>

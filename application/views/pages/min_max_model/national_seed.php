@@ -254,7 +254,7 @@ if(isset($param_state) && isset($param_apmc)){ ?>
             `<html>
                 <head>
                     <title>Feedback User Data</title>
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+                    <link rel="stylesheet" href="<?php echo base_url(); ?>assest/css/bootstrap-4.min.css"/>
                     <style type="text/css">
                         table {width: 100%;font: 7px Calibri;};
                         table, th, td {border: solid 1px #DDD; border-collapse: collapse;
