@@ -25,10 +25,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$config['base_url'] = 'http://www.sankalpekprayas.org/jan/';
 
-// Dynamic base_url — works on any host/port (local dev, staging, production)
-$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http")."://".$_SERVER['HTTP_HOST'].'/';
-// Production URL — uncomment for deployment on agri.enam.gov.in
-//$config['base_url'] = 'https://agri.enam.gov.in/';
+// Auto-detect base_url for both local dev and production
+// Detects protocol (http/https), host, and subdirectory automatically
+$_base_protocol = (
+    (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+) ? 'https' : 'http';
+$_base_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$_base_path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+$config['base_url'] = $_base_protocol . '://' . $_base_host . $_base_path . '/';
 $config['offset'] = 5;
 
 $config['nam_url'] = $config['base_url'].'nam';
@@ -550,7 +555,7 @@ $config['proxy_ips'] = '';
 | To re-enable: change FALSE to TRUE below.
 |
 */
-$config['admin_panel_enabled'] = FALSE; // Login page disabled. Change to TRUE to re-enable.
+$config['admin_panel_enabled'] = FALSE; // Admin panel disabled. Change to TRUE to re-enable.
 
 /*
 |--------------------------------------------------------------------------

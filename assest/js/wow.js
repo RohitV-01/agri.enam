@@ -1,8 +1,5 @@
 /*!
- * WOW-compat v2.0.0 — drop-in replacement for WOW.js 1.1.2 (abandoned 2015)
- * Uses the native IntersectionObserver API instead of scroll listeners.
- * Preserves the existing WOW() constructor API and all class/data-wow-* attrs.
- * Compatible with animate.css v3 & v4.
+ * Core animations module.
  * MIT License
  */
 (function (root, factory) {

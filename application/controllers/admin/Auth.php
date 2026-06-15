@@ -18,19 +18,17 @@ class Auth extends CI_Controller
 		$this->lang->load('auth');
 		$this->load->model(array('admin/Language_model','admin/User_profile_model'));
 		
+		// Guard: block entire admin access if panel is disabled
+		if ( ! $this->config->item('admin_panel_enabled')) {
+			show_404('', FALSE);
+			return;
+		}
 	}
 
 	/**	
 	 * Redirect if needed, otherwise display the user list
 	 */
 	public function index() {
-		// Login page is disabled. Returns 404 to prevent exposure.
-		// To re-enable: set $config['admin_panel_enabled'] = TRUE in config.php
-		if ( ! $this->config->item('admin_panel_enabled')) {
-			show_404('', FALSE);
-			return;
-		}
-
 		if (!$this->ion_auth->logged_in()){	
 			$data['title'] = 'eNam Admin';
 			$data['head'] = $this->load->view('admin/comman/head','',TRUE);
