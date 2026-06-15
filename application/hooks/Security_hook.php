@@ -20,10 +20,18 @@ class Security_hook {
     {
         // At pre_controller stage the CI super-object is not yet available.
         // Check the URI directly from the server request.
-        $uri = isset($_SERVER['REQUEST_URI']) ? strtolower($_SERVER['REQUEST_URI']) : '';
+        $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
-        // Only gate /admin/* paths
-        if (strpos($uri, '/admin/') === FALSE && substr($uri, -6) !== '/admin') {
+        // Strip query string so that parameter bypasses (e.g. /admin?any) are prevented
+        if (($pos = strpos($uri, '?')) !== FALSE) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $uri = strtolower($uri);
+        $uri = str_replace('\\', '/', $uri);
+
+        // Only gate /admin or /admin/* paths
+        $is_admin = (strpos($uri, '/admin/') !== FALSE) || (substr($uri, -6) === '/admin') || ($uri === 'admin') || (substr($uri, -7) === '/admin/');
+        if ( ! $is_admin) {
             return;
         }
 
