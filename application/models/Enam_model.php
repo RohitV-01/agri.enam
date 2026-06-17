@@ -36,11 +36,7 @@ class Enam_model extends CI_Model {
 	}
 	
 	function all_menus(){
-	    $l_id = $this->session->userdata('client_language');
-	    
-	    // 		if($l_id == ''){
-	    // 			$l_id = 1;
-	    // 		}
+	    $l_id = (int)($this->session->userdata('client_language') ?: 1);
 	    // 		$this->db->select('*');
 	    // 		$this->db->join('menu_item mi','mi.menu_id = m.id');
 	    // 		$this->db->order_by('m.sort,m.created_at,m.updated_at','ASC');
