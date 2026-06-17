@@ -23,7 +23,7 @@ class Site_search_ctrl extends CI_Controller {
 	}
 	
 	function index(){
-		$l_id = $this->session->userdata('client_language');
+		$l_id = (int)($this->session->userdata('client_language') ?: 1);
 		$text = $this->input->post('site_search');
 		if($text != ''){
 			$this->db->select('pi.page_id,pi.page_body,pi.title,p.is_static,p.url,m.cms_url');

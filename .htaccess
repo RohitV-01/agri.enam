@@ -23,6 +23,9 @@ RewriteRule ^\.(gitignore|gitattributes|editorconfig|buildpath|project|idea) - [
 RewriteRule ^(composer\.(json|lock)|php\.ini|error_log|php_conn\.php|test_mysqli\.php)$ - [F,L,NC]
 RewriteRule ^(README\.md|readme\.rst|contributing\.md|url_list\.md|license\.txt)$ - [F,L,NC]
 
+# F-001: Block database dumps and backup files (CERT-In finding)
+RewriteRule \.(sql|sql\.gz|sql\.zip|bak|dump|tar|tar\.gz|tgz)$ - [F,L,NC]
+
 # Force HTTPS, but do not loop on localhost tests
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
 RewriteCond %{HTTPS} !=on

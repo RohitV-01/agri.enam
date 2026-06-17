@@ -6,8 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$CI = & get_instance();
 			$CI->load->database();
 			$l_id = (int)$CI->session->userdata('client_language');
-			
-			$result = $CI->db->query("SELECT * from heading_item WHERE heading_id = (select id from heading WHERE heading = '$string') and language_id in (1,".$l_id.") AND status = 1")->result_array();
+			if ($l_id <= 0) { $l_id = 1; }
+			$safe_string = $CI->db->escape_str($string);
+
+			$result = $CI->db->query("SELECT * from heading_item WHERE heading_id = (select id from heading WHERE heading = '{$safe_string}') and language_id in (1,".$l_id.") AND status = 1")->result_array();
 
 			if (empty($result)) {
 			    return '';
